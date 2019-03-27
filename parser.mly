@@ -9,7 +9,7 @@ open Ast
 %token RETURN IF ELSE ELIF FOR WHILE INT BOOL FLOAT ACCESS MAIN NEW DEF AT_STEP SELF
 %token <int> LITERAL
 %token <bool> BLIT
-%token <string> ID FLIT STRING
+%token <string> ID FLIT STRING SLITERAL
 %token EOF
 
 %start program
@@ -58,7 +58,7 @@ typ:
     INT   { Int   }
   | BOOL  { Bool  }
   | FLOAT { Float }
-  | VOID  { Void  }
+  | STRING  { String  }
 
 vdecl_list:
     /* nothing */    { [] }
