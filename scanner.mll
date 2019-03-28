@@ -4,7 +4,7 @@ let digit = ['0' - '9']
 let digits = digit+
 
 let letter = ['A'-'Z' 'a'-'z' ]
-let words = [letter '\t' '\n' '\r']* 
+let words = [letter '\t' '\n' '\r' '\b']* 
 
 rule token = parse
   [' ' '\t' '\r' '\n'] { token lexbuf } (* Whitespace *)
@@ -64,10 +64,9 @@ and comment = parse
 and read_string buf =
   parse
   | '"'       { SLITERAL (Buffer.contents buf) }
-  | '/'  { Buffer.add_char buf '/'; read_string buf lexbuf }
-  | '\\' { Buffer.add_char buf '\\'; read_string buf lexbuf }
-  | '\b'  { Buffer.add_char buf '\b'; read_string buf lexbuf }
-  | words  { Buffer.add_string buf (Lexing.lexeme lexbuf); read_string buf lexbuf }
-  | digits  { Buffer.add_string buf (Lexing.lexeme lexbuf); read_string buf lexbuf }
-  | _ { raise (SyntaxError ("Illegal string character: " ^ Lexing.lexeme lexbuf)) }
-  | eof { raise (SyntaxError ("String is not terminated")) }
+  | '/'       { Buffer.add_char buf '/'; read_string buf lexbuf }
+  | '\\'      { Buffer.add_char buf '\\'; read_string buf lexbuf }
+  | words     { Buffer.add_string buf (Lexing.lexeme lexbuf); read_string buf lexbuf }
+  | digits    { Buffer.add_string buf (Lexing.lexeme lexbuf); read_string buf lexbuf }
+  | _         { raise (SyntaxError ("Illegal string character: " ^ Lexing.lexeme lexbuf)) }
+  | eof       { raise (SyntaxError ("String is not terminated")) }

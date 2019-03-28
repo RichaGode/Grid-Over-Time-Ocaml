@@ -74,6 +74,7 @@ let rec string_of_expr = function
   | Call(f, el) ->
       f ^ "(" ^ String.concat ", " (List.map string_of_expr el) ^ ")"
   | Noexpr -> ""
+  | Sliteral(l) -> l 
 
 let rec string_of_stmt = function
     Block(stmts) ->
@@ -92,8 +93,7 @@ let string_of_typ = function
     Int -> "int"
   | Bool -> "bool"
   | Float -> "float"
-  | Void -> "void"
-
+  | String -> "string"
 let string_of_vdecl (t, id) = string_of_typ t ^ " " ^ id ^ ";\n"
 
 let string_of_fdecl fdecl =
