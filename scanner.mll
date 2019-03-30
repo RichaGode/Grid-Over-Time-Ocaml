@@ -66,7 +66,7 @@ and read_string buf =
   | '"'       { SLITERAL (Buffer.contents buf) }
   | '/'       { Buffer.add_char buf '/'; read_string buf lexbuf }
   | '\\'      { Buffer.add_char buf '\\'; read_string buf lexbuf }
-  | words     { Buffer.add_string buf (Lexing.lexeme lexbuf); read_string buf lexbuf }
+  | words     { Buffer.add_string buf (Lexing.lexeme lexbuf); read_string buf lexbuf } (* check if add_string removes from buffer *)
   | digits    { Buffer.add_string buf (Lexing.lexeme lexbuf); read_string buf lexbuf }
   | _         { raise (SyntaxError ("Illegal string character: " ^ Lexing.lexeme lexbuf)) }
   | eof       { raise (SyntaxError ("String is not terminated")) }

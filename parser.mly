@@ -17,6 +17,7 @@ open Ast
 
 %nonassoc NOELSE
 %nonassoc ELSE
+%left ACCESS
 %right ASSIGN
 %left OR
 %left AND
@@ -74,6 +75,7 @@ stmt_list:
 stmt:
     expr SEMI                               { Expr $1               }
   | RETURN expr_opt SEMI                    { Return $2             }
+  | ID ACCESS expr                          { Expr $3               }
   | LBRACE stmt_list RBRACE                 { Block(List.rev $2)    }
   | IF LPAREN expr RPAREN stmt %prec NOELSE { If($3, $5, Block([])) }
   | IF LPAREN expr RPAREN stmt ELSE stmt    { If($3, $5, $7)        }
