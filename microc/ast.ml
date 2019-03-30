@@ -5,7 +5,7 @@ type op = Add | Sub | Mult | Div | Equal | Neq | Less | Leq | Greater | Geq |
 
 type uop = Neg | Not
 
-type typ = Int | Bool | Float | String
+type typ = Int | Bool | Float | Void
 
 type bind = typ * string
 
@@ -14,7 +14,6 @@ type expr =
   | Fliteral of string
   | BoolLit of bool
   | Id of string
-  | Sliteral of string
   | Binop of expr * op * expr
   | Unop of uop * expr
   | Assign of string * expr
@@ -26,8 +25,6 @@ type stmt =
   | Expr of expr
   | Return of expr
   | If of expr * stmt * stmt
-  | Elif of expr * stmt * stmt
-  | Else of stmt
   | For of expr * expr * expr * stmt
   | While of expr * stmt
 
