@@ -6,7 +6,7 @@ open Ast
 
 %token SEMI LPAREN RPAREN LBRACE RBRACE COMMA PLUS MINUS TIMES DIVIDE MOD EXP ASSIGN
 %token NOT EQ NEQ LT LEQ GT GEQ AND OR
-%token RETURN IF ELSE ELIF FOR WHILE INT BOOL FLOAT ACCESS MAIN NEW DEF AT_STEP SELF
+%token RETURN IF ELSE ELIF FOR WHILE INT BOOL FLOAT VOID ACCESS MAIN NEW DEF AT_STEP SELF
 %token <int> LITERAL
 %token <bool> BLIT
 %token <string> ID FLIT STRING SLITERAL
@@ -60,6 +60,7 @@ typ:
   | BOOL  { Bool  }
   | FLOAT { Float }
   | STRING  { String  }
+  | VOID { Void }
 
 vdecl_list:
     /* nothing */    { [] }
@@ -75,7 +76,6 @@ stmt_list:
 stmt:
     expr SEMI                               { Expr $1               }
   | RETURN expr_opt SEMI                    { Return $2             }
-  | ID ACCESS expr                          { Expr $3               }
   | LBRACE stmt_list RBRACE                 { Block(List.rev $2)    }
   | IF LPAREN expr RPAREN stmt %prec NOELSE { If($3, $5, Block([])) }
   | IF LPAREN expr RPAREN stmt ELSE stmt    { If($3, $5, $7)        }

@@ -5,7 +5,7 @@ type op = Add | Sub | Mult | Div | Equal | Neq | Less | Leq | Greater | Geq |
 
 type uop = Neg | Not
 
-type typ = Int | Bool | Float | String
+type typ = Int | Bool | Float | String | Void
 
 type bind = typ * string
 
@@ -26,7 +26,6 @@ type stmt =
   | Expr of expr
   | Return of expr
   | If of expr * stmt * stmt
-  | Elif of expr * stmt * stmt
   | Else of stmt
   | For of expr * expr * expr * stmt
   | While of expr * stmt
@@ -93,6 +92,7 @@ let string_of_typ = function
     Int -> "int"
   | Bool -> "bool"
   | Float -> "float"
+  | Void -> "void"
   | String -> "string"
 let string_of_vdecl (t, id) = string_of_typ t ^ " " ^ id ^ ";\n"
 
