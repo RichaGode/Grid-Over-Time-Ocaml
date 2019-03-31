@@ -7,10 +7,11 @@
 
 # Path to the LLVM interpreter
 LLI="lli"
-#LLI="/usr/local/opt/llvm/bin/lli"
+LLI="/usr/local/opt/llvm/bin/lli"
 
 # Path to the LLVM compiler
 LLC="llc"
+LLC="/usr/local/opt/llvm/bin/llc"
 
 # Path to the C compiler
 CC="cc"
