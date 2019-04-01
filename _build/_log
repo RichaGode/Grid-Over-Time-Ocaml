@@ -1,69 +1,34 @@
 ### Starting build.
-# Target: got.ml.depends, tags: { package(llvm), package(llvm.analysis), warn(+a-4), extension:ml, file:got.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package llvm -package llvm.analysis -modules got.ml > got.ml.depends
+# Target: test1.ml.depends, tags: { package(llvm), package(llvm.analysis), warn(+a-4), extension:ml, file:test1.ml, ocaml, ocamldep, quiet, traverse }
+/Users/dangode/.opam/4.03.0/bin/ocamldep.opt -modules test1.ml > test1.ml.depends # cached
 # Target: ast.ml.depends, tags: { package(llvm), package(llvm.analysis), warn(+a-4), extension:ml, file:ast.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package llvm -package llvm.analysis -modules ast.ml > ast.ml.depends # cached
+/Users/dangode/.opam/4.03.0/bin/ocamldep.opt -modules ast.ml > ast.ml.depends # cached
 # Target: ast.cmo, tags: { package(llvm), package(llvm.analysis), warn(+a-4), byte, compile, extension:cmo, extension:ml, file:ast.cmo, file:ast.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -w +a-4 -package llvm -package llvm.analysis -o ast.cmo ast.ml # cached
-# Target: codegen.ml.depends, tags: { package(llvm), package(llvm.analysis), warn(+a-4), extension:ml, file:codegen.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package llvm -package llvm.analysis -modules codegen.ml > codegen.ml.depends # cached
-# Target: sast.ml.depends, tags: { package(llvm), package(llvm.analysis), warn(+a-4), extension:ml, file:sast.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package llvm -package llvm.analysis -modules sast.ml > sast.ml.depends # cached
-# Target: sast.cmo, tags: { package(llvm), package(llvm.analysis), warn(+a-4), byte, compile, extension:cmo, extension:ml, file:sast.cmo, file:sast.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -w +a-4 -package llvm -package llvm.analysis -o sast.cmo sast.ml # cached
-# Target: codegen.cmo, tags: { package(llvm), package(llvm.analysis), warn(+a-4), byte, compile, extension:cmo, extension:ml, file:codegen.cmo, file:codegen.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -w +a-4 -package llvm -package llvm.analysis -o codegen.cmo codegen.ml # cached
+/Users/dangode/.opam/4.03.0/bin/ocamlc.opt -c -w +a-4 -o ast.cmo ast.ml # cached
 # Target: parser.mly, tags: { package(llvm), package(llvm.analysis), warn(+a-4), extension:mly, file:parser.mly, infer, ocaml, ocamlyacc, parser, quiet, traverse }
 /Users/dangode/.opam/4.03.0/bin/ocamlyacc parser.mly # cached
 # Target: parser.mli.depends, tags: { package(llvm), package(llvm.analysis), warn(+a-4), extension:mli, file:parser.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package llvm -package llvm.analysis -modules parser.mli > parser.mli.depends # cached
+/Users/dangode/.opam/4.03.0/bin/ocamldep.opt -modules parser.mli > parser.mli.depends # cached
 # Target: parser.cmi, tags: { package(llvm), package(llvm.analysis), warn(+a-4), byte, compile, extension:mli, file:parser.mli, interf, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -w +a-4 -package llvm -package llvm.analysis -o parser.cmi parser.mli # cached
+/Users/dangode/.opam/4.03.0/bin/ocamlc.opt -c -w +a-4 -o parser.cmi parser.mli # cached
 # Target: scanner.mll, tags: { package(llvm), package(llvm.analysis), warn(+a-4), extension:mll, file:scanner.mll, lexer, ocaml, ocamllex, quiet, traverse }
 /Users/dangode/.opam/4.03.0/bin/ocamllex.opt -q scanner.mll # cached
 # Target: scanner.ml.depends, tags: { package(llvm), package(llvm.analysis), warn(+a-4), extension:ml, file:scanner.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package llvm -package llvm.analysis -modules scanner.ml > scanner.ml.depends # cached
+/Users/dangode/.opam/4.03.0/bin/ocamldep.opt -modules scanner.ml > scanner.ml.depends # cached
 # Target: scanner.cmo, tags: { package(llvm), package(llvm.analysis), warn(+a-4), byte, compile, extension:cmo, extension:ml, file:scanner.cmo, file:scanner.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -w +a-4 -package llvm -package llvm.analysis -o scanner.cmo scanner.ml # cached
-# Target: semant.ml.depends, tags: { package(llvm), package(llvm.analysis), warn(+a-4), extension:ml, file:semant.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package llvm -package llvm.analysis -modules semant.ml > semant.ml.depends # cached
-# Target: semant.cmo, tags: { package(llvm), package(llvm.analysis), warn(+a-4), byte, compile, extension:cmo, extension:ml, file:semant.cmo, file:semant.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -w +a-4 -package llvm -package llvm.analysis -o semant.cmo semant.ml # cached
-# Target: got.cmo, tags: { package(llvm), package(llvm.analysis), warn(+a-4), byte, compile, extension:cmo, extension:ml, file:got.cmo, file:got.ml, implem, ocaml, quiet, traverse }
-ocamlfind ocamlc -c -w +a-4 -package llvm -package llvm.analysis -o got.cmo got.ml
+/Users/dangode/.opam/4.03.0/bin/ocamlc.opt -c -w +a-4 -o scanner.cmo scanner.ml # cached
+# Target: test1.cmo, tags: { package(llvm), package(llvm.analysis), warn(+a-4), byte, compile, extension:cmo, extension:ml, file:test1.cmo, file:test1.ml, implem, ocaml, quiet, traverse }
+/Users/dangode/.opam/4.03.0/bin/ocamlc.opt -c -w +a-4 -o test1.cmo test1.ml # cached
 # Target: ast.cmx, tags: { package(llvm), package(llvm.analysis), warn(+a-4), compile, extension:cmx, extension:ml, file:ast.cmx, file:ast.ml, implem, native, ocaml, quiet, traverse }
-ocamlfind ocamlopt -c -w +a-4 -package llvm -package llvm.analysis -o ast.cmx ast.ml
-+ ocamlfind ocamlopt -c -w +a-4 -package llvm -package llvm.analysis -o ast.cmx ast.ml
-File "ast.ml", line 78, characters 25-649:
-Warning 8: this pattern-matching is not exhaustive.
-Here is an example of a value that is not matched:
-Else _
-# Target: sast.cmx, tags: { package(llvm), package(llvm.analysis), warn(+a-4), compile, extension:cmx, extension:ml, file:sast.cmx, file:sast.ml, implem, native, ocaml, quiet, traverse }
-ocamlfind ocamlopt -c -w +a-4 -package llvm -package llvm.analysis -o sast.cmx sast.ml
+/Users/dangode/.opam/4.03.0/bin/ocamlopt.opt -c -w +a-4 -o ast.cmx ast.ml # cached
 # Target: parser.ml.depends, tags: { package(llvm), package(llvm.analysis), warn(+a-4), extension:ml, file:parser.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package llvm -package llvm.analysis -modules parser.ml > parser.ml.depends
+/Users/dangode/.opam/4.03.0/bin/ocamldep.opt -modules parser.ml > parser.ml.depends # cached
 # Target: parser.cmx, tags: { package(llvm), package(llvm.analysis), warn(+a-4), compile, extension:cmx, extension:ml, file:parser.cmx, file:parser.ml, implem, native, ocaml, quiet, traverse }
-ocamlfind ocamlopt -c -w +a-4 -package llvm -package llvm.analysis -o parser.cmx parser.ml
-# Target: codegen.cmx, tags: { package(llvm), package(llvm.analysis), warn(+a-4), compile, extension:cmx, extension:ml, file:codegen.cmx, file:codegen.ml, implem, native, ocaml, quiet, traverse }
-ocamlfind ocamlopt -c -w +a-4 -package llvm -package llvm.analysis -o codegen.cmx codegen.ml
-+ ocamlfind ocamlopt -c -w +a-4 -package llvm -package llvm.analysis -o codegen.cmx codegen.ml
-File "codegen.ml", line 79, characters 8-25:
-Warning 26: unused variable string_format_str.
+/Users/dangode/.opam/4.03.0/bin/ocamlopt.opt -c -w +a-4 -o parser.cmx parser.ml # cached
 # Target: scanner.cmx, tags: { package(llvm), package(llvm.analysis), warn(+a-4), compile, extension:cmx, extension:ml, file:scanner.cmx, file:scanner.ml, implem, native, ocaml, quiet, traverse }
-ocamlfind ocamlopt -c -w +a-4 -package llvm -package llvm.analysis -o scanner.cmx scanner.ml
-# Target: semant.cmx, tags: { package(llvm), package(llvm.analysis), warn(+a-4), compile, extension:cmx, extension:ml, file:semant.cmx, file:semant.ml, implem, native, ocaml, quiet, traverse }
-ocamlfind ocamlopt -c -w +a-4 -package llvm -package llvm.analysis -o semant.cmx semant.ml
-+ ocamlfind ocamlopt -c -w +a-4 -package llvm -package llvm.analysis -o semant.cmx semant.ml
-File "semant.ml", line 94, characters 19-2609:
-Warning 8: this pattern-matching is not exhaustive.
-Here is an example of a value that is not matched:
-Sliteral _
-File "semant.ml", line 156, characters 25-1093:
-Warning 8: this pattern-matching is not exhaustive.
-Here is an example of a value that is not matched:
-Else _
-# Target: got.cmx, tags: { package(llvm), package(llvm.analysis), warn(+a-4), compile, extension:cmx, extension:ml, file:got.cmx, file:got.ml, implem, native, ocaml, quiet, traverse }
-ocamlfind ocamlopt -c -w +a-4 -package llvm -package llvm.analysis -o got.cmx got.ml
-# Target: got.native, tags: { package(llvm), package(llvm.analysis), warn(+a-4), dont_link_with, extension:native, file:got.native, link, native, ocaml, program, quiet, traverse }
-ocamlfind ocamlopt -linkpkg -package llvm -package llvm.analysis ast.cmx sast.cmx codegen.cmx parser.cmx scanner.cmx semant.cmx got.cmx -o got.native
+/Users/dangode/.opam/4.03.0/bin/ocamlopt.opt -c -w +a-4 -o scanner.cmx scanner.ml # cached
+# Target: test1.cmx, tags: { package(llvm), package(llvm.analysis), warn(+a-4), compile, extension:cmx, extension:ml, file:test1.cmx, file:test1.ml, implem, native, ocaml, quiet, traverse }
+/Users/dangode/.opam/4.03.0/bin/ocamlopt.opt -c -w +a-4 -o test1.cmx test1.ml # cached
+# Target: test1.native, tags: { package(llvm), package(llvm.analysis), warn(+a-4), dont_link_with, extension:native, file:test1.native, link, native, ocaml, program, quiet, traverse }
+/Users/dangode/.opam/4.03.0/bin/ocamlopt.opt ast.cmx parser.cmx scanner.cmx test1.cmx -o test1.native # cached
 # Compilation successful.

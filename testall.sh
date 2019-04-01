@@ -166,7 +166,7 @@ LLIFail() {
 
 which "$LLI" >> $globallog || LLIFail
 
-if [ ! test.o ]
+if [ ! printbig.c ]
 then
     echo "Could not find test.o"
     echo "Try \"make test.o\""

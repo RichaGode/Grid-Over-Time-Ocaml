@@ -31,8 +31,8 @@ type token =
   | BOOL
   | FLOAT
   | VOID
+  | STRING
   | ACCESS
-  | MAIN
   | NEW
   | DEF
   | AT_STEP
@@ -41,7 +41,6 @@ type token =
   | BLIT of (bool)
   | ID of (string)
   | FLIT of (string)
-  | STRING of (string)
   | SLITERAL of (string)
   | EOF
 

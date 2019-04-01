@@ -39,12 +39,12 @@ rule token = parse
 | "while"  { WHILE }
 | "return" { RETURN }
 | "int"    { INT }
+| "string" { STRING }
 | "bool"   { BOOL }
 | "void"   { VOID   }
 | "float"  { FLOAT }
 | "true"   { BLIT(true)  }
 | "false"  { BLIT(false) }
-| "main"   { MAIN }
 | "new"    { NEW }
 | "def"    { DEF }
 | "self"   { SELF }
@@ -52,7 +52,7 @@ rule token = parse
 | '"'      {read_string (Buffer.create 17) lexbuf}
 | digits as lxm { LITERAL(int_of_string lxm) }
 | digits '.'  digit* ( ['e' 'E'] ['+' '-']? digits )? as lxm { FLIT(lxm) }
-| ['a'-'z' 'A'-'Z'] ['_' 'a'-'z' 'A'-'Z' '0'-'9']*     as lxm { ID(lxm) }
+| letter ('_' | letter | digit)*     as lxm { ID(lxm) }
 | eof { EOF }
 | _ as char { raise (Failure("illegal character " ^ Char.escaped char)) }
 
