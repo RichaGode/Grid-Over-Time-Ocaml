@@ -24,14 +24,14 @@ let translate (globals, functions) =
   
   (* Create the LLVM compilation module into which
      we will generate code *)
-  let the_module = L.create_module context "GoT" in
+  let the_module = L.create_module context "Got" in
 
   (* Get types from the context *)
   let i32_t      = L.i32_type    context
   and i8_t       = L.i8_type     context
   and i1_t       = L.i1_type     context
   and float_t    = L.double_type context
-  and str_t = L.pointer_type (L.i8_type context)
+  and str_t      = L.pointer_type (L.i8_type context)
   and void_t     = L.void_type   context in
 
   (* Return the LLVM type for a MicroC type *)
@@ -57,12 +57,6 @@ let translate (globals, functions) =
       L.var_arg_function_type i32_t [| L.pointer_type i8_t |] in
   let printf_func : L.llvalue = 
       L.declare_function "printf" printf_t the_module in
-
-  let print_str_t : L.lltype = 
-      L.var_arg_function_type str_t [| L.pointer_type i8_t |] in
-  let print_str_func : L.llvalue = 
-      L.declare_function "print_str" print_str_t the_module in
-
 
   let printbig_t : L.lltype =
       L.function_type i32_t [| i32_t |] in
@@ -119,7 +113,7 @@ let translate (globals, functions) =
 
     (* Construct code for an expression; return its value *)
     let rec expr builder ((_, e) : sexpr) = match e with
-	SLiteral i  -> L.const_int i32_t i
+	      SLiteral i  -> L.const_int i32_t i
       | SBoolLit b  -> L.const_int i1_t (if b then 1 else 0)
       | SFliteral l -> L.const_float_of_string float_t l
       | SStr_literal s -> L.build_global_stringptr s "str" builder
@@ -176,8 +170,8 @@ let translate (globals, functions) =
 	  L.build_call printf_func [| float_format_str ; (expr builder e) |]
 	    "printf" builder
       | SCall ("print_str", [e]) ->
-    L.build_call print_str_func [| string_format_str ; (expr builder e) |]
-      "print_str" builder
+    L.build_call printf_func [| string_format_str ; (expr builder e) |]
+      "printf" builder
       | SCall (f, args) ->
          let (fdef, fdecl) = StringMap.find f function_decls in
 	 let llargs = List.rev (List.map (expr builder) (List.rev args)) in

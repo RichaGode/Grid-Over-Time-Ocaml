@@ -17,7 +17,7 @@ all : got.native printbig.o
 #
 # See https://github.com/ocaml/ocamlbuild/blob/master/manual/manual.adoc
 
-microc.native :
+got.native :
 	opam config exec -- \
 	ocamlbuild -use-ocamlfind got.native
 
@@ -26,7 +26,7 @@ microc.native :
 .PHONY : clean
 clean :
 	ocamlbuild -clean
-	rm -rf testall.log ocamlllvm *.diff
+	rm -rf testall.log ocamlllvm *.diff printbig.o *.ll *.exe *.out *.s
 
 # Testing the "printbig" example
 
