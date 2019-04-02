@@ -14,6 +14,7 @@ type expr =
   | Fliteral of string
   | BoolLit of bool
   | Id of string
+  | Str_literal of string
   | Binop of expr * op * expr
   | Unop of uop * expr
   | Assign of string * expr
@@ -71,6 +72,7 @@ let rec string_of_expr = function
   | Call(f, el) ->
       f ^ "(" ^ String.concat ", " (List.map string_of_expr el) ^ ")"
   | Noexpr -> ""
+  | Str_literal(l) -> l
 
 let rec string_of_stmt = function
     Block(stmts) ->

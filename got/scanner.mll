@@ -51,6 +51,7 @@ rule token = parse
 | "def"    { DEF }
 | "self"   { SELF }
 | "@step"  { AT_STEP }
+| '"'      {read_string (Buffer.create 17) lexbuf}
 | digits as lxm { LITERAL(int_of_string lxm) }
 | digits '.'  digit* ( ['e' 'E'] ['+' '-']? digits )? as lxm { FLIT(lxm) }
 | ['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']*     as lxm { ID(lxm) }
@@ -60,3 +61,11 @@ rule token = parse
 and comment = parse
   "#/" { token lexbuf }
 | _    { comment lexbuf }
+
+and read_string buf =
+  parse
+  | '"'       { STR_LITERAL (Buffer.contents buf) }
+  | '/'       { Buffer.add_char buf '/'; read_string buf lexbuf }
+  | '\\'      { Buffer.add_char buf '\\'; read_string buf lexbuf }
+  | words     { Buffer.add_string buf (Lexing.lexeme lexbuf); read_string buf lexbuf }
+  | digits    { Buffer.add_string buf (Lexing.lexeme lexbuf); read_string buf lexbuf }
