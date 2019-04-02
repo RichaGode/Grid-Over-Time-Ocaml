@@ -8,7 +8,7 @@ test : all testall.sh
 # to test linking external code
 
 .PHONY : all
-all : microc.native printbig.o
+all : got.native printbig.o
 
 # "make microc.native" compiles the compiler
 #
@@ -19,7 +19,7 @@ all : microc.native printbig.o
 
 microc.native :
 	opam config exec -- \
-	ocamlbuild -use-ocamlfind microc.native
+	ocamlbuild -use-ocamlfind got.native
 
 # "make clean" removes all generated files
 
