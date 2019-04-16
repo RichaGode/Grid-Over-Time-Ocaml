@@ -1,4 +1,5 @@
-void main()
+int main()
 {
-  print_str("hello world"); 
+  print_str("hello world");
+  return 0; 
 }
