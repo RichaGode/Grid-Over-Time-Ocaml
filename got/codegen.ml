@@ -1,4 +1,4 @@
-(* Code generation: translate takes a semantically checked AST and
+  (* Code generation: translate takes a semantically checked AST and
 produces LLVM IR
 
 LLVM tutorial: Make sure to read the OCaml version of the tutorial
@@ -130,7 +130,7 @@ let translate (globals, functions) =
 	  | A.Mult    -> L.build_fmul
 	  | A.Div     -> L.build_fdiv
     | A.Mod     -> L.build_frem
-    | A.Exp     -> L.pow
+(*     | A.Exp     -> L.pow *)
     | A.Equal   -> L.build_fcmp L.Fcmp.Oeq
 	  | A.Neq     -> L.build_fcmp L.Fcmp.One
 	  | A.Less    -> L.build_fcmp L.Fcmp.Olt
