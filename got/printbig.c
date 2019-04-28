@@ -3,6 +3,7 @@
  */
 
 #include <stdio.h>
+#include <math.h>
 
 /*
  * Font information: one byte per row, 8 rows per character
@@ -64,6 +65,11 @@ void printbig(int c)
   } while (index & 0x7); 
 }
 
+
+float pow(float x, float y)
+{
+  return pow(x,y)
+}
 
 #ifdef BUILD_TEST
 int main()

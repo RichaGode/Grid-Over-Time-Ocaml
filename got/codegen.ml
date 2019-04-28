@@ -63,6 +63,11 @@ let translate (globals, functions) =
   let printbig_func : L.llvalue =
       L.declare_function "printbig" printbig_t the_module in
 
+  let pow_t : L.lltype = 
+      L.var_arg_function_type float_t [| float_t; float_t |] in
+  let pow_func : L.llvalue = 
+      L.declare_function "pow" pow_t the_module in
+
   (* Define each function (arguments and return type) so we can 
      call it even before we've created its body *)
   let function_decls : (L.llvalue * sfunc_decl) StringMap.t =
@@ -130,7 +135,7 @@ let translate (globals, functions) =
 	  | A.Mult    -> L.build_fmul
 	  | A.Div     -> L.build_fdiv
     | A.Mod     -> L.build_frem
-    | A.Exp     -> L.pow
+(*     | A.Exp     -> L.pow *)
     | A.Equal   -> L.build_fcmp L.Fcmp.Oeq
 	  | A.Neq     -> L.build_fcmp L.Fcmp.One
 	  | A.Less    -> L.build_fcmp L.Fcmp.Olt
@@ -167,6 +172,7 @@ let translate (globals, functions) =
       | SCall ("print", [e]) | SCall ("printb", [e]) ->
 	  L.build_call printf_func [| int_format_str ; (expr builder e) |]
 	    "printf" builder
+      | Scall ("pow", [e1;e2]) -> L.build_call pow_func [| (expr builder e1); (expr builder e2) |] "pow" builder
       | SCall ("printbig", [e]) ->
 	  L.build_call printbig_func [| (expr builder e) |] "printbig" builder
       | SCall ("printf", [e]) -> 

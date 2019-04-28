@@ -42,9 +42,14 @@ let check (globals, functions) =
 			                         ("printb", Bool);
 			                         ("printf", Float);
 			                         ("printbig", Int);
-                               ("print_str", String) ]
-  in
-
+                               ("print_str", String);]
+  let non_void_decls = 
+    let add_bind_nv map (name, ty) = StringMap.add name {
+        typ = Float;
+        fname = name; 
+        formals = [(ty, "x"); (ty, "y")];
+        locals = []; body = [] } map
+      in List.fold_left add_bind_nv StringMap.empty [ ("pow", [Float; Float]); ]
   (* Add function name to symbol table *)
   let add_func map fd = 
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"
@@ -58,9 +63,9 @@ let check (globals, functions) =
   in
 
   (* Collect all function names into one symbol table *)
-  let function_decls = List.fold_left add_func built_in_decls functions
+  let master_function_decls_list = [built_in_decls] @ [non_void_decls] in 
+  let function_decls = List.fold_left add_func master_function_decls_list functions
   in
-  
   (* Return a function from our symbol table *)
   let find_func s = 
     try StringMap.find s function_decls
@@ -99,12 +104,21 @@ let check (globals, functions) =
       | Noexpr     -> (Void, SNoexpr)
       | Str_literal l -> (String, SStr_literal l)
       | Id s       -> (type_of_identifier s, SId s)
+      | VDeclAssign(e1, e2, e3) -> 
+        let lt = e1 
+        and (rt, e') = expr e3 in
+        let err = "illegal assignment " ^ string_of_typ lt ^ " = " ^
+          string_of_typ rt ^ " in "
+        in (check_assign lt rt err, SAssign(e2, (rt, e')))
+      (* assign takes in the variable and the value. It does a) checks for the type in the stringmap of the variable,
+    and b) gets the type of the value by the recursive function expr *)
       | Assign(var, e) as ex -> 
           let lt = type_of_identifier var
           and (rt, e') = expr e in
           let err = "illegal assignment " ^ string_of_typ lt ^ " = " ^ 
             string_of_typ rt ^ " in " ^ string_of_expr ex
-          in (check_assign lt rt err, SAssign(var, (rt, e')))
+          in (check_assign lt rt err, SAssign(var, (rt, e'))) 
+
       | Unop(op, e) as ex -> 
           let (t, e') = expr e in
           let ty = match op with
@@ -114,6 +128,21 @@ let check (globals, functions) =
                                  string_of_uop op ^ string_of_typ t ^
                                  " in " ^ string_of_expr ex))
           in (ty, SUnop(op, (t, e')))
+      | Binop (e1, Exp, e2) as call -> 
+        let fd = "pow" in
+          let param_length = List.length fd.formals in
+          if List.length [e1; e2] != param_length then
+            raise (Failure ("expecting " ^ string_of_int param_length ^ 
+                            " arguments in " ^ string_of_expr call))
+          else let check_call (ft, _) e = 
+            let (et, e') = expr e in 
+            let err = "illegal argument found " ^ string_of_typ et ^
+              " expected " ^ string_of_typ ft ^ " in " ^ string_of_expr e
+            in (check_assign ft et err, e')
+          in 
+          let args' = List.map2 check_call fd.formals [e1; e2]
+          in (fd.typ, SCall("pow", args'))
+      (* (t, SCall (e1, e2) *)
       | Binop(e1, op, e2) as e -> 
           let (t1, e1') = expr e1 
           and (t2, e2') = expr e2 in
@@ -121,8 +150,8 @@ let check (globals, functions) =
           let same = t1 = t2 in
           (* Determine expression type based on operator and operand types *)
           let ty = match op with
-            Add | Sub | Mult | Div | Mod | Exp when same && t1 = Int   -> Int
-          | Add | Sub | Mult | Div | Mod | Exp when same && t1 = Float -> Float
+            Add | Sub | Mult | Div | Mod when same && t1 = Int   -> Int
+          | Add | Sub | Mult | Div | Mod when same && t1 = Float -> Float
           | Equal | Neq            when same               -> Bool
           | Less | Leq | Greater | Geq
                      when same && (t1 = Int || t1 = Float) -> Bool

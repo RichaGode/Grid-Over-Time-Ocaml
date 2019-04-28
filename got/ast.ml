@@ -5,16 +5,18 @@ type op = Add | Sub | Mult | Div | Equal | Neq | Less | Leq | Greater | Geq |
 
 type uop = Neg | Not
 
-type typ = Int | Bool | Float | Void | String
+type typ = Int | Bool | Float | Void | String | Struct | Grid 
 
 type bind = typ * string
 
 type expr =
     Literal of int
+  | VDeclAssign of typ* expr * expr (* this takes the type of the identifier, the identifier, and the value (which is an expression) *)
   | Fliteral of string
   | BoolLit of bool
   | Id of string
   | Str_literal of string
+| Struct_literal of int * int * int
   | Binop of expr * op * expr
   | Unop of uop * expr
   | Assign of string * expr
