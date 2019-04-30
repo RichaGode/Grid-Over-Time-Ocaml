@@ -1,7 +1,11 @@
 int main()
 {
   float a;
-  a = 2.0^3.0;
-  printf(a);
+  float b;
+  float c;
+  b = 2.0;
+  c = 3.0;
+  a = b^c;
+  printf(b^c);
   return 0; 
 }

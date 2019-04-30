@@ -8,8 +8,7 @@ module StringMap = Map.Make(String)
 (* Semantic checking of the AST. Returns an SAST if successful,
    throws an exception if something is wrong.
 
-   Check each global variable, then check each function *)
-
+   Check each global variable, then check each function *) 
 let check (globals, functions) =
 
   (* Verify a list of bindings has no void types or duplicate names *)
@@ -43,14 +42,16 @@ let check (globals, functions) =
 			                         ("printf", Float);
 			                         ("printbig", Int);
                                ("print_str", String);]
+  in 
   let non_void_decls = 
-    let add_bind_nv map (name, ty) = StringMap.add name {
+    let add_bind_nv map (name, ty1, ty2) = StringMap.add name {
         typ = Float;
         fname = name; 
-        formals = [(ty, "x"); (ty, "y")];
+        formals = [(ty1, "x"); (ty2, "y")];
         locals = []; body = [] } map
-      in List.fold_left add_bind_nv StringMap.empty [ ("pow", [Float; Float]); ]
+      in List.fold_left add_bind_nv StringMap.empty [ ("pow_func", Float, Float); ]
   (* Add function name to symbol table *)
+  in  
   let add_func map fd = 
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"
     and dup_err = "duplicate function " ^ fd.fname
@@ -61,10 +62,13 @@ let check (globals, functions) =
        | _ when StringMap.mem n map -> make_err dup_err  
        | _ ->  StringMap.add n fd map 
   in
-
   (* Collect all function names into one symbol table *)
-  let master_function_decls_list = [built_in_decls] @ [non_void_decls] in 
-  let function_decls = List.fold_left add_func master_function_decls_list functions
+  let master_function_decls = StringMap.merge (fun k xo yo -> match xo,yo with
+    | Some xo, Some yo -> Some xo 
+    | None, Some yo -> Some yo
+    | Some xo, None -> Some xo
+  ) built_in_decls non_void_decls in 
+  let function_decls = List.fold_left add_func master_function_decls functions
   in
   (* Return a function from our symbol table *)
   let find_func s = 
@@ -104,12 +108,12 @@ let check (globals, functions) =
       | Noexpr     -> (Void, SNoexpr)
       | Str_literal l -> (String, SStr_literal l)
       | Id s       -> (type_of_identifier s, SId s)
-      | VDeclAssign(e1, e2, e3) -> 
+      (* | VDeclAssign(e1, e2, e3) -> 
         let lt = e1 
         and (rt, e') = expr e3 in
         let err = "illegal assignment " ^ string_of_typ lt ^ " = " ^
           string_of_typ rt ^ " in "
-        in (check_assign lt rt err, SAssign(e2, (rt, e')))
+        in (check_assign lt rt err, SAssign(e2, (rt, e'))) *)
       (* assign takes in the variable and the value. It does a) checks for the type in the stringmap of the variable,
     and b) gets the type of the value by the recursive function expr *)
       | Assign(var, e) as ex -> 
@@ -129,7 +133,7 @@ let check (globals, functions) =
                                  " in " ^ string_of_expr ex))
           in (ty, SUnop(op, (t, e')))
       | Binop (e1, Exp, e2) as call -> 
-        let fd = "pow" in
+        let fd = find_func "pow_func" in
           let param_length = List.length fd.formals in
           if List.length [e1; e2] != param_length then
             raise (Failure ("expecting " ^ string_of_int param_length ^ 
@@ -141,7 +145,7 @@ let check (globals, functions) =
             in (check_assign ft et err, e')
           in 
           let args' = List.map2 check_call fd.formals [e1; e2]
-          in (fd.typ, SCall("pow", args'))
+          in (fd.typ, SCall("pow_func", args'))
       (* (t, SCall (e1, e2) *)
       | Binop(e1, op, e2) as e -> 
           let (t1, e1') = expr e1 

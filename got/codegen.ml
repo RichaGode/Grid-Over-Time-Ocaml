@@ -66,7 +66,7 @@ let translate (globals, functions) =
   let pow_t : L.lltype = 
       L.var_arg_function_type float_t [| float_t; float_t |] in
   let pow_func : L.llvalue = 
-      L.declare_function "pow" pow_t the_module in
+      L.declare_function "pow_func" pow_t the_module in
 
   (* Define each function (arguments and return type) so we can 
      call it even before we've created its body *)
@@ -172,7 +172,7 @@ let translate (globals, functions) =
       | SCall ("print", [e]) | SCall ("printb", [e]) ->
 	  L.build_call printf_func [| int_format_str ; (expr builder e) |]
 	    "printf" builder
-      | Scall ("pow", [e1;e2]) -> L.build_call pow_func [| (expr builder e1); (expr builder e2) |] "pow" builder
+      | SCall ("pow_func", [e1;e2]) -> L.build_call pow_func [| (expr builder e1); (expr builder e2) |] "pow_func" builder
       | SCall ("printbig", [e]) ->
 	  L.build_call printbig_func [| (expr builder e) |] "printbig" builder
       | SCall ("printf", [e]) -> 

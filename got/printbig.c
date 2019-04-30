@@ -66,10 +66,8 @@ void printbig(int c)
 }
 
 
-float pow(float x, float y)
-{
-  return pow(x,y)
-}
+float pow_func(float a, float b)
+{return powf(a,b);}
 
 #ifdef BUILD_TEST
 int main()

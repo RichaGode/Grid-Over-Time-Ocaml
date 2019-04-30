@@ -11,7 +11,7 @@ type bind = typ * string
 
 type expr =
     Literal of int
-  | VDeclAssign of typ* expr * expr (* this takes the type of the identifier, the identifier, and the value (which is an expression) *)
+(*   | VDeclAssign of typ* expr * expr  *)
   | Fliteral of string
   | BoolLit of bool
   | Id of string
