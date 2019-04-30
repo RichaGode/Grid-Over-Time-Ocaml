@@ -66,8 +66,14 @@ void printbig(int c)
 }
 
 
-float pow_func(float a, float b)
-{return powf(a,b);}
+double pow_func(double a, double b)
+{return pow(a,b);}
+
+
+struct Grid {
+   int x;
+   int y; 
+}
 
 #ifdef BUILD_TEST
 int main()

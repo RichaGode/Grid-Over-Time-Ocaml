@@ -49,7 +49,7 @@ let check (globals, functions) =
         fname = name; 
         formals = [(ty1, "x"); (ty2, "y")];
         locals = []; body = [] } map
-      in List.fold_left add_bind_nv StringMap.empty [ ("pow_func", Float, Float); ]
+      in List.fold_left add_bind_nv StringMap.empty [ ("pow_func", Float, Float);]
   (* Add function name to symbol table *)
   in  
   let add_func map fd = 
@@ -173,7 +173,7 @@ let check (globals, functions) =
                             " arguments in " ^ string_of_expr call))
           else let check_call (ft, _) e = 
             let (et, e') = expr e in 
-            let err = "illegal argument found " ^ string_of_typ et ^
+            let err = fname ^ "illegal argument found " ^ string_of_typ et ^
               " expected " ^ string_of_typ ft ^ " in " ^ string_of_expr e
             in (check_assign ft et err, e')
           in 

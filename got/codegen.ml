@@ -32,7 +32,8 @@ let translate (globals, functions) =
   and i1_t       = L.i1_type     context
   and float_t    = L.double_type context
   and str_t      = L.pointer_type (L.i8_type context)
-  and void_t     = L.void_type   context in
+  and void_t     = L.void_type   context 
+in
 
   (* Return the LLVM type for a MicroC type *)
   let ltype_of_typ = function
@@ -68,6 +69,8 @@ let translate (globals, functions) =
   let pow_func : L.llvalue = 
       L.declare_function "pow_func" pow_t the_module in
 
+
+
   (* Define each function (arguments and return type) so we can 
      call it even before we've created its body *)
   let function_decls : (L.llvalue * sfunc_decl) StringMap.t =
@@ -85,7 +88,7 @@ let translate (globals, functions) =
     let builder = L.builder_at_end context (L.entry_block the_function) in
 
     let int_format_str = L.build_global_stringptr "%d\n" "fmt" builder
-    and float_format_str = L.build_global_stringptr "%g\n" "fmt" builder
+    and float_format_str = L.build_global_stringptr "%f\n" "fmt" builder
     and string_format_str = L.build_global_stringptr "%s\n" "fmt" builder in
 
     (* Construct the function's "locals": formal arguments and locally
@@ -172,7 +175,9 @@ let translate (globals, functions) =
       | SCall ("print", [e]) | SCall ("printb", [e]) ->
 	  L.build_call printf_func [| int_format_str ; (expr builder e) |]
 	    "printf" builder
-      | SCall ("pow_func", [e1;e2]) -> L.build_call pow_func [| (expr builder e1); (expr builder e2) |] "pow_func" builder
+      | SCall ("pow_func", [e1;e2]) -> 
+      (* let e1' = expr builder e1 and e2' = expr builder e2 
+      in L.build_mul e1' e2' "tmp" builder  *) L.build_call pow_func [| (expr builder e1); (expr builder e2) |] "pow_func" builder
       | SCall ("printbig", [e]) ->
 	  L.build_call printbig_func [| (expr builder e) |] "printbig" builder
       | SCall ("printf", [e]) -> 
