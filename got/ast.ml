@@ -5,17 +5,15 @@ type op = Add | Sub | Mult | Div | Equal | Neq | Less | Leq | Greater | Geq |
 
 type uop = Neg | Not
 
-type typ = Int | Bool | Float | Void | String
+type typ = Int | Bool | Float | Void | String | Grid
 
 type bind = typ * string
 
 type expr =
     Literal of int
-(*   | VDeclAssign of typ* expr * expr  *)
   | Fliteral of string
   | BoolLit of bool
   | Id of string
-  | Grid of string
   | Str_literal of string
   | Binop of expr * op * expr
   | Unop of uop * expr
@@ -66,7 +64,6 @@ let string_of_uop = function
 let rec string_of_expr = function
     Literal(l) -> string_of_int l
   | Fliteral(l) -> l
-  | Grid(l) -> l 
   | BoolLit(true) -> "true"
   | BoolLit(false) -> "false"
   | Id(s) -> s
@@ -98,6 +95,7 @@ let string_of_typ = function
   | Float -> "float"
   | Void -> "void"
   | String -> "string"
+  | Grid -> "grid"
 
 let string_of_vdecl (t, id) = string_of_typ t ^ " " ^ id ^ ";\n"
 

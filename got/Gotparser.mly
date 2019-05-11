@@ -59,9 +59,8 @@ typ:
   | BOOL  { Bool  }
   | FLOAT { Float }
   | VOID  { Void  }
-  | STRING  { String  }
-  | STRUCT { Struct }
-  | VOID_POINTER {}
+  | STRING { String  }
+  | GRID   { Grid    }
 
 vdecl_list:
     /* nothing */    { [] }
@@ -96,7 +95,6 @@ expr:
   | BLIT             { BoolLit($1)            }
   | ID               { Id($1)                 }
   | STR_LITERAL      { Str_literal($1)        }
-  | GRID             { Grid($1)               }
   | expr PLUS   expr { Binop($1, Add,   $3)   }
   | expr MINUS  expr { Binop($1, Sub,   $3)   }
   | expr TIMES  expr { Binop($1, Mult,  $3)   }

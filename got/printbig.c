@@ -81,7 +81,7 @@ grid *grid_init(){
   g->x = 0;
   g->y = 0;
   return g;
-}; 
+};
 
 #ifdef BUILD_TEST
 int main()

@@ -51,7 +51,7 @@ rule token = parse
 | "def"    { DEF }
 | "self"   { SELF }
 | "@step"  { AT_STEP }
-| "Grid" as g    { GRID (g) }
+| "Grid"   { GRID    }
 | '"'([^'"']* as  lxm)'"' { STR_LITERAL(lxm) }
 | digits as lxm { LITERAL(int_of_string lxm) }
 | digits '.'  digit* ( ['e' 'E'] ['+' '-']? digits )? as lxm { FLIT(lxm) }

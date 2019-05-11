@@ -43,6 +43,7 @@ in
     | A.Float -> float_t
     | A.Void  -> void_t
     | A.String -> str_t
+    | A.Grid -> grid_ptr_t
   (* TODO Actually add all types *)
   in
 
@@ -71,7 +72,7 @@ in
       L.declare_function "pow_func" pow_t the_module in
 
   let grid_init_t : L.lltype = 
-      L.function_type [| |] in
+      L.function_type grid_ptr_t [| |] in
   let grid_init_func : L.llvalue = 
       L.declare_function "grid_init" grid_init_t the_module in
 
@@ -190,7 +191,7 @@ in
       | SCall ("print_str", [e]) ->
     L.build_call printf_func [| string_format_str ; (expr builder e) |]
       "printf" builder
-      | Scall ("grid_init", []) -> L.build_call grid_init_func [| |] "grid_init" builder
+      | SCall ("grid_init", []) -> L.build_call grid_init_func [| |] "grid_init" builder
       | SCall (f, args) ->
          let (fdef, fdecl) = StringMap.find f function_decls in
 	 let llargs = List.rev (List.map (expr builder) (List.rev args)) in

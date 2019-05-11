@@ -51,7 +51,16 @@ let check (globals, functions) =
         locals = []; body = [] } map
       in List.fold_left add_bind_nv StringMap.empty [ ("pow_func", Float, Float);]
   (* Add function name to symbol table *)
-  in  
+  in 
+  let no_arg_decls = 
+    let add_bind_grid map (name) = StringMap.add name {
+      typ = Grid; 
+      fname = name;
+      formals = [];
+      locals = []; 
+      body = [] } map
+    in List.fold_left add_bind_grid StringMap.empty [("grid_init");]
+  in 
   let add_func map fd = 
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"
     and dup_err = "duplicate function " ^ fd.fname
@@ -63,11 +72,16 @@ let check (globals, functions) =
        | _ ->  StringMap.add n fd map 
   in
   (* Collect all function names into one symbol table *)
+  let var_arg_function_decls = StringMap.merge (fun k xo yo -> match xo,yo with
+    | Some xo, Some yo -> Some xo 
+    | None, Some yo -> Some yo
+    | Some xo, None -> Some xo
+  ) built_in_decls non_void_decls in
   let master_function_decls = StringMap.merge (fun k xo yo -> match xo,yo with
     | Some xo, Some yo -> Some xo 
     | None, Some yo -> Some yo
     | Some xo, None -> Some xo
-  ) built_in_decls non_void_decls in 
+  ) var_arg_function_decls no_arg_decls in
   let function_decls = List.fold_left add_func master_function_decls functions
   in
   (* Return a function from our symbol table *)
@@ -106,7 +120,6 @@ let check (globals, functions) =
       | Fliteral l -> (Float, SFliteral l)
       | BoolLit l  -> (Bool, SBoolLit l)
       | Noexpr     -> (Void, SNoexpr)
-      | Grid g ->     
       | Str_literal l -> (String, SStr_literal l)
       | Id s       -> (type_of_identifier s, SId s)
       (* | VDeclAssign(e1, e2, e3) -> 
