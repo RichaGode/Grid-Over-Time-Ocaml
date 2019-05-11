@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 
 /*
  * Font information: one byte per row, 8 rows per character
@@ -70,10 +71,17 @@ double pow_func(double a, double b)
 {return pow(a,b);}
 
 
-struct Grid {
+typedef struct Grid {
    int x;
    int y; 
-}
+} grid; 
+
+grid *grid_init(){
+  grid *g = (grid *) malloc(sizeof(struct Grid));
+  g->x = 0;
+  g->y = 0;
+  return g;
+}; 
 
 #ifdef BUILD_TEST
 int main()

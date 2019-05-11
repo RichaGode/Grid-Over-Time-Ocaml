@@ -106,6 +106,7 @@ let check (globals, functions) =
       | Fliteral l -> (Float, SFliteral l)
       | BoolLit l  -> (Bool, SBoolLit l)
       | Noexpr     -> (Void, SNoexpr)
+      | Grid g ->     
       | Str_literal l -> (String, SStr_literal l)
       | Id s       -> (type_of_identifier s, SId s)
       (* | VDeclAssign(e1, e2, e3) -> 

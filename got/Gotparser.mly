@@ -9,7 +9,7 @@ open Ast
 %token RETURN IF ELSE ELIF FOR WHILE INT BOOL FLOAT VOID STRING ACCESS NEW DEF AT_STEP SELF GRID
 %token <int> LITERAL
 %token <bool> BLIT
-%token <string> ID FLIT STR_LITERAL STRUCT STRUCT_LITERAL
+%token <string> ID FLIT STR_LITERAL
 %token EOF
 
 %start program
@@ -61,7 +61,7 @@ typ:
   | VOID  { Void  }
   | STRING  { String  }
   | STRUCT { Struct }
-  | GRID { Grid }
+  | VOID_POINTER {}
 
 vdecl_list:
     /* nothing */    { [] }
@@ -96,7 +96,7 @@ expr:
   | BLIT             { BoolLit($1)            }
   | ID               { Id($1)                 }
   | STR_LITERAL      { Str_literal($1)        }
-  /* | STRUCT_LITERAL   { Struct_literal ($1)    } */
+  | GRID             { Grid($1)               }
   | expr PLUS   expr { Binop($1, Add,   $3)   }
   | expr MINUS  expr { Binop($1, Sub,   $3)   }
   | expr TIMES  expr { Binop($1, Mult,  $3)   }

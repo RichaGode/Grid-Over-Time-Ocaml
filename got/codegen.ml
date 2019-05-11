@@ -32,6 +32,7 @@ let translate (globals, functions) =
   and i1_t       = L.i1_type     context
   and float_t    = L.double_type context
   and str_t      = L.pointer_type (L.i8_type context)
+  and grid_ptr_t = L.pointer_type (L.i8_type context)
   and void_t     = L.void_type   context 
 in
 
@@ -69,7 +70,10 @@ in
   let pow_func : L.llvalue = 
       L.declare_function "pow_func" pow_t the_module in
 
-
+  let grid_init_t : L.lltype = 
+      L.function_type [| |] in
+  let grid_init_func : L.llvalue = 
+      L.declare_function "grid_init" grid_init_t the_module in
 
   (* Define each function (arguments and return type) so we can 
      call it even before we've created its body *)
@@ -186,6 +190,7 @@ in
       | SCall ("print_str", [e]) ->
     L.build_call printf_func [| string_format_str ; (expr builder e) |]
       "printf" builder
+      | Scall ("grid_init", []) -> L.build_call grid_init_func [| |] "grid_init" builder
       | SCall (f, args) ->
          let (fdef, fdecl) = StringMap.find f function_decls in
 	 let llargs = List.rev (List.map (expr builder) (List.rev args)) in

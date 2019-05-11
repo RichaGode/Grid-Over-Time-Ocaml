@@ -51,7 +51,6 @@ rule token = parse
 | "def"    { DEF }
 | "self"   { SELF }
 | "@step"  { AT_STEP }
-| "Knight" as s { STRUCT (s) }
 | "Grid" as g    { GRID (g) }
 | '"'([^'"']* as  lxm)'"' { STR_LITERAL(lxm) }
 | digits as lxm { LITERAL(int_of_string lxm) }
