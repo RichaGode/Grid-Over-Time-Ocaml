@@ -60,6 +60,15 @@ let check (globals, functions) =
       locals = []; 
       body = [] } map
     in List.fold_left add_bind_grid StringMap.empty [("grid_init");]
+  in
+  let int_decls = 
+    let func map (name, ty1) = StringMap.add name {
+      typ = Int; 
+      fname = name;
+      formals = [(ty1, "x")];
+      locals = []; 
+      body = [] } map
+    in List.fold_left func StringMap.empty [("get_grid_x", Grid);]
   in 
   let add_func map fd = 
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"
@@ -77,11 +86,16 @@ let check (globals, functions) =
     | None, Some yo -> Some yo
     | Some xo, None -> Some xo
   ) built_in_decls non_void_decls in
-  let master_function_decls = StringMap.merge (fun k xo yo -> match xo,yo with
+  let temp = StringMap.merge (fun k xo yo -> match xo,yo with
     | Some xo, Some yo -> Some xo 
     | None, Some yo -> Some yo
     | Some xo, None -> Some xo
   ) var_arg_function_decls no_arg_decls in
+  let master_function_decls = StringMap.merge (fun k xo yo -> match xo,yo with
+    | Some xo, Some yo -> Some xo 
+    | None, Some yo -> Some yo
+    | Some xo, None -> Some xo
+  ) temp int_decls in
   let function_decls = List.fold_left add_func master_function_decls functions
   in
   (* Return a function from our symbol table *)

@@ -83,6 +83,11 @@ grid *grid_init(){
   return g;
 };
 
+int get_grid_x(grid *g){
+  // printf("%d",g->x); 
+  return g->x;
+}; 
+
 #ifdef BUILD_TEST
 int main()
 {

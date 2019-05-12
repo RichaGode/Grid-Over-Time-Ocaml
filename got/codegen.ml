@@ -76,6 +76,11 @@ in
   let grid_init_func : L.llvalue = 
       L.declare_function "grid_init" grid_init_t the_module in
 
+  let get_grid_x_t : L.lltype = 
+      L.function_type i32_t [| grid_ptr_t |] in
+  let get_grid_x_func : L.llvalue = 
+      L.declare_function "get_grid_x" get_grid_x_t the_module in
+
   (* Define each function (arguments and return type) so we can 
      call it even before we've created its body *)
   let function_decls : (L.llvalue * sfunc_decl) StringMap.t =
@@ -188,6 +193,8 @@ in
       | SCall ("printf", [e]) -> 
 	  L.build_call printf_func [| float_format_str ; (expr builder e) |]
 	    "printf" builder
+      | SCall ("get_grid_x", [e]) -> L.build_call get_grid_x_func [| (expr builder e) |]
+      "get_grid_x" builder
       | SCall ("print_str", [e]) ->
     L.build_call printf_func [| string_format_str ; (expr builder e) |]
       "printf" builder
