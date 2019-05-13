@@ -132,14 +132,18 @@ void *new_knave(int x, int y){
 
 int get_stealth(knave *k) {
   return k->stealth; 
-
 }; 
-
 
 void *set_stealth(knave *k, int val) {
   k->stealth = val; 
   return k; 
 }; 
+
+void *move_knave(knave *k, int x, int y){
+  k->x_pos = k->x_pos+x;
+  k->y_pos = k->y_pos+y;
+  return k;
+}
 
 
 #ifdef BUILD_TEST

@@ -49,7 +49,10 @@ let check (globals, functions) =
         fname = name; 
         formals = [(ty1, "x"); (ty2, "y")];
         locals = []; body = [] } map
-      in List.fold_left add_bind_nv StringMap.empty [ ("pow_func", Float, Float, Float); ("set_stealth", Knave, Knave, Int)]
+      in List.fold_left add_bind_nv StringMap.empty [ ("pow_func", Float, Float, Float); 
+                                                      ("set_stealth", Knave, Knave, Int);
+                                                      ("move_knave", Knave, Int, Int)
+                                                    ]
   (* Add function name to symbol table *)
   in 
   let no_arg_decls = 
@@ -68,7 +71,7 @@ let check (globals, functions) =
       formals = [(ty1, "x")];
       locals = []; 
       body = [] } map
-    in List.fold_left func StringMap.empty [("get_grid_x", Int, Grid); ("get_stealth", Int, Knave)]
+    in List.fold_left func StringMap.empty [("get_grid_x", Int, Grid); ("get_stealth", Int, Knave); ("get_health", Int, Knight)]
   in 
   let add_func map fd = 
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"
