@@ -38,10 +38,12 @@ let check (globals, functions) =
       formals = [(ty, "x")];
       locals = []; body = [] } map
     in List.fold_left add_bind StringMap.empty [ ("print", Int);
-			                         ("printb", Bool);
-			                         ("printf", Float);
-			                         ("printbig", Int);
-                               ("print_str", String);]
+                  			                         ("printb", Bool);
+                  			                         ("printf", Float);
+                  			                         ("printbig", Int);
+                                                 ("print_str", String);
+                                                 ("knight_die", Knight);
+                                               ]
   in 
   let non_void_decls = 
     let add_bind_nv map (name, ret_type, ty1, ty2) = StringMap.add name {
@@ -51,7 +53,8 @@ let check (globals, functions) =
         locals = []; body = [] } map
       in List.fold_left add_bind_nv StringMap.empty [ ("pow_func", Float, Float, Float); 
                                                       ("set_stealth", Knave, Knave, Int);
-                                                      ("move_knave", Knave, Int, Int)
+                                                      ("move_knave", Knave, Int, Int);
+                                                      ("attack_knight", Knight, Knave, Knight);
                                                     ]
   (* Add function name to symbol table *)
   in 
@@ -62,7 +65,10 @@ let check (globals, functions) =
       formals = [(ty1, "x"); (ty2, "y");];
       locals = []; 
       body = [] } map
-    in List.fold_left add_bind_object StringMap.empty [("grid_init", Grid, Int, Int); ("new_knight", Knight, Int, Int); ("new_knave", Knave, Int, Int);]
+    in List.fold_left add_bind_object StringMap.empty [ ("grid_init", Grid, Int, Int); 
+                                                        ("new_knight", Knight, Int, Int); 
+                                                        ("new_knave", Knave, Int, Int);
+                                                      ]
   in
   let int_decls = 
     let func map (name, ret_type, ty1) = StringMap.add name {
@@ -71,12 +77,13 @@ let check (globals, functions) =
       formals = [(ty1, "x")];
       locals = []; 
       body = [] } map
-    in List.fold_left func StringMap.empty [("get_grid_x", Int, Grid);
-                                           ("get_stealth", Int, Knave);
-                                           ("get_knave_health", Int, Knave); 
-                                           ("get_x_pos", Int, Knave);
-                                           ("get_y_pos", Int, Knave);
-                                           ("get_knight_health", Int, Knight);]
+    in List.fold_left func StringMap.empty [ ("get_grid_x", Int, Grid);
+                                             ("get_stealth", Int, Knave);
+                                             ("get_knave_health", Int, Knave); 
+                                             ("get_x_pos", Int, Knave);
+                                             ("get_y_pos", Int, Knave);
+                                             ("get_knight_health", Int, Knight);
+                                           ]
   in 
   let add_func map fd = 
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"
