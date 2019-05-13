@@ -111,6 +111,11 @@ in
   let new_knave_func : L.llvalue = 
       L.declare_function "new_knave" new_knave_t the_module in
 
+  let knave_die_t : L.lltype = 
+    L.function_type void_t [| knave_ptr_t |] in
+  let knave_die_func : L.llvalue = 
+    L.declare_function "knave_die" knave_die_t the_module in
+
   let set_stealth_t : L.lltype =
       L.function_type knave_ptr_t [| knave_ptr_t; i32_t |] in
   let set_stealth_func : L.llvalue =
@@ -302,6 +307,9 @@ in
         "attack_knight" builder
       | SCall ("knight_die", [e]) ->
         L.build_call knight_die_func [| (expr builder e) |]
+        "" builder
+      | SCall ("knave_die", [e]) ->
+        L.build_call knave_die_func [| (expr builder e) |]
         "" builder
       | SCall (f, args) ->
          let (fdef, fdecl) = StringMap.find f function_decls in

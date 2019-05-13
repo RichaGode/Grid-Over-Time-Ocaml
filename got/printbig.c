@@ -136,6 +136,12 @@ void *new_knave(int x, int y){
   return k;
 };
 
+void knave_die(knave *k) {
+  free(k);
+}; 
+
+
+
 /** getters for knave **/ 
 int get_stealth(knave *k) {
   return k->stealth; 
