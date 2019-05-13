@@ -113,7 +113,7 @@ int get_knight_health(knight *k) {
 
 void knight_die(knight *k) {
   free(k);
-}
+}; 
 
 /* knave functions */ 
 
@@ -167,7 +167,7 @@ void *move_knave(knave *k, int x, int y){
 }
 
 /** interactors for knave **/
-void *attack_knight(knave *k, knight *a){
+knight *attack_knight(knave *k, knight *a){
   a->health = a->health - k->attack_strength;
   return a;
 }

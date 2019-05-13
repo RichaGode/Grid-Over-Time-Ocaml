@@ -141,10 +141,12 @@ in
   let move_knave_func : L.llvalue = 
       L.declare_function "move_knave" move_knave_t the_module in
 
+(* INTERACTION FUNCTIONS *)
   let attack_knight_t : L.lltype = 
       L.function_type knight_ptr_t [| knave_ptr_t; knight_ptr_t|] in
   let attack_knight_func : L.llvalue = 
       L.declare_function "attack_knight" attack_knight_t the_module in
+
 
   (* Define each function (arguments and return type) so we can 
      call it even before we've created its body *)
@@ -300,8 +302,7 @@ in
         "attack_knight" builder
       | SCall ("knight_die", [e]) ->
         L.build_call knight_die_func [| (expr builder e) |]
-        "knight_die" builder
-      
+        "" builder
       | SCall (f, args) ->
          let (fdef, fdecl) = StringMap.find f function_decls in
 	 let llargs = List.rev (List.map (expr builder) (List.rev args)) in
