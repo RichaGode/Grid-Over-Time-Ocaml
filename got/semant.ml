@@ -49,7 +49,10 @@ let check (globals, functions) =
         fname = name; 
         formals = [(ty1, "x"); (ty2, "y")];
         locals = []; body = [] } map
-      in List.fold_left add_bind_nv StringMap.empty [ ("pow_func", Float, Float, Float); ("set_stealth", Knave, Knave, Int)]
+      in List.fold_left add_bind_nv StringMap.empty [ ("pow_func", Float, Float, Float); 
+                                                      ("set_stealth", Knave, Knave, Int);
+                                                      ("move_knave", Knave, Int, Int)
+                                                    ]
   (* Add function name to symbol table *)
   in 
   let no_arg_decls = 
@@ -70,9 +73,10 @@ let check (globals, functions) =
       body = [] } map
     in List.fold_left func StringMap.empty [("get_grid_x", Int, Grid);
                                            ("get_stealth", Int, Knave);
-                                           ("get_health", Int, Knave); 
+                                           ("get_knave_health", Int, Knave); 
                                            ("get_x_pos", Int, Knave);
-                                           ("get_y_pos", Int, Knave);]
+                                           ("get_y_pos", Int, Knave);
+                                           ("get_knight_health", Int, Knight);]
   in 
   let add_func map fd = 
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"
@@ -179,13 +183,14 @@ let check (globals, functions) =
           let args' = List.map2 check_call fd.formals [e1; e2]
           in (fd.typ, SCall("pow_func", args'))
       (* (t, SCall (e1, e2) *)
-      | Binop(e1, Access, e2) as call -> 
-        let function_name = match e2 with
-        | "health" -> "get_health" 
-        | "x" -> "get_x_pos"
-        | "y" -> "get_y_pos"
-        | "stealth" -> "get_stealth"
-        | _ -> raise ( Failure ("no such variable exists for this class"))
+      (* | Binop(e1, Access, e2) as call ->
+        let (expr_type, expr_val) = expr e2 in 
+        let function_name = match (expr_type, expr_val) with
+        | (_, "health") -> "get_knave_health" 
+        | (_, "x") -> "get_x_pos"
+        | (_, "y") -> "get_y_pos"
+        | (_, "stealth") -> "get_stealth"
+        | (_, _) -> raise ( Failure ("no such variable exists for this class"))
         in 
         let fd = find_func function_name in
           let param_length = List.length fd.formals in
@@ -199,7 +204,7 @@ let check (globals, functions) =
             in (check_assign ft et err, e')
           in 
           let args' = List.map2 check_call fd.formals [e1]
-          in (fd.typ, SCall(function_name, args'))
+          in (fd.typ, SCall(function_name, args')) *)
       | Binop(e1, op, e2) as e -> 
           let (t1, e1') = expr e1 
           and (t2, e2') = expr e2 in

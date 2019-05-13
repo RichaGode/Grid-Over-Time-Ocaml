@@ -75,6 +75,8 @@ in
   let pow_func : L.llvalue = 
       L.declare_function "pow_func" pow_t the_module in
 
+
+(*GRID FUNCTIONS *)
   let grid_init_t : L.lltype = 
       L.function_type grid_ptr_t [| i32_t; i32_t |] in
   let grid_init_func : L.llvalue = 
@@ -85,26 +87,54 @@ in
   let get_grid_x_func : L.llvalue = 
       L.declare_function "get_grid_x" get_grid_x_t the_module in
 
+
+(*KNIGHT FUNCTIONS *)
   let new_knight_t : L.lltype =
       L.function_type knight_ptr_t [| i32_t; i32_t|] in
   let new_knight_func : L.llvalue = 
       L.declare_function "new_knight" new_knight_t the_module in
+
+  let get_knight_health_t : L.lltype = 
+    L.function_type i32_t [| knight_ptr_t |] in
+  let get_knight_health_func : L.llvalue = 
+    L.declare_function "get_knight_health" get_knight_health_t the_module in
+
+
+(*KNAVE FUNCTIONS *)
+  let new_knave_t : L.lltype =
+      L.function_type knave_ptr_t [| i32_t; i32_t |] in
+  let new_knave_func : L.llvalue = 
+      L.declare_function "new_knave" new_knave_t the_module in
 
   let set_stealth_t : L.lltype =
       L.function_type knave_ptr_t [| knave_ptr_t; i32_t |] in
   let set_stealth_func : L.llvalue =
       L.declare_function "set_stealth" set_stealth_t the_module in
 
-  let new_knave_t : L.lltype =
-      L.function_type knave_ptr_t [| i32_t; i32_t |] in
-  let new_knave_func : L.llvalue = 
-      L.declare_function "new_knave" new_knave_t the_module in
-
   let get_stealth_t : L.lltype = 
       L.function_type i32_t [| knave_ptr_t |] in
   let get_stealth_func : L.llvalue = 
       L.declare_function "get_stealth" get_stealth_t the_module in
 
+  let get_knave_health_t : L.lltype = 
+    L.function_type i32_t [| knave_ptr_t |] in
+  let get_knave_health_func : L.llvalue = 
+    L.declare_function "get_knight_health" get_knave_health_t the_module in
+
+  let get_knave_x_pos_t : L.lltype = 
+    L.function_type i32_t [| knave_ptr_t |] in
+  let get_knave_x_pos_func : L.llvalue = 
+    L.declare_function "get_x_pos" get_knave_x_pos_t the_module in
+
+  let get_knave_y_pos_t : L.lltype = 
+    L.function_type i32_t [| knave_ptr_t |] in
+  let get_knave_y_pos_func : L.llvalue = 
+    L.declare_function "get_y_pos" get_knave_y_pos_t the_module in
+
+  let move_knave_t : L.lltype = 
+      L.function_type knave_ptr_t [| i32_t; i32_t |] in
+  let move_knave_func : L.llvalue = 
+      L.declare_function "move_knave" move_knave_t the_module in
 
   (* Define each function (arguments and return type) so we can 
      call it even before we've created its body *)
@@ -208,24 +238,54 @@ in
 	  | A.Neg                  -> L.build_neg
           | A.Not                  -> L.build_not) e' "tmp" builder
       | SCall ("print", [e]) | SCall ("printb", [e]) ->
-	  L.build_call printf_func [| int_format_str ; (expr builder e) |]
-	    "printf" builder
-      | SCall ("pow_func", [e1;e2]) ->  L.build_call pow_func [| (expr builder e1); (expr builder e2) |] "pow_func" builder
+	      L.build_call printf_func [| int_format_str ; (expr builder e) |]
+	      "printf" builder
+      | SCall ("pow_func", [e1;e2]) ->  
+        L.build_call pow_func [| (expr builder e1); (expr builder e2) |] 
+        "pow_func" builder
       | SCall ("printbig", [e]) ->
-	  L.build_call printbig_func [| (expr builder e) |] "printbig" builder
+	      L.build_call printbig_func [| (expr builder e) |] 
+        "printbig" builder
       | SCall ("printf", [e]) -> 
-	  L.build_call printf_func [| float_format_str ; (expr builder e) |]
-	    "printf" builder
-      | SCall ("get_grid_x", [e]) -> L.build_call get_grid_x_func [| (expr builder e) |]
-      "get_grid_x" builder
+	      L.build_call printf_func [| float_format_str ; (expr builder e) |]
+	      "printf" builder
+      | SCall ("get_grid_x", [e]) -> 
+        L.build_call get_grid_x_func [| (expr builder e) |]
+        "get_grid_x" builder
       | SCall ("print_str", [e]) ->
-    L.build_call printf_func [| string_format_str ; (expr builder e) |]
-      "printf" builder
-      | SCall ("grid_init", [e1; e2]) -> L.build_call grid_init_func [| (expr builder e1); (expr builder e2) |] "grid_init" builder
-      | SCall ("new_knight", [e1; e2]) -> L.build_call new_knight_func [| (expr builder e1); (expr builder e2) |] "new_knight" builder
-      | SCall ("get_stealth", [e]) -> L.build_call get_stealth_func [| (expr builder e) |] "get_stealth" builder
-      | SCall ("set_stealth", [e1;e2]) -> L.build_call set_stealth_func [| (expr builder e1); (expr builder e2) |] "set_stealth" builder
-      | SCall ("new_knave", [e1; e2]) -> L.build_call new_knave_func [|  (expr builder e1); (expr builder e2) |] "new_knave" builder
+        L.build_call printf_func [| string_format_str ; (expr builder e) |]
+        "printf" builder
+      | SCall ("grid_init", [e1; e2]) -> 
+        L.build_call grid_init_func [| (expr builder e1); (expr builder e2) |] 
+        "grid_init" builder
+      | SCall ("new_knight", [e1; e2]) -> 
+        L.build_call new_knight_func [| (expr builder e1); (expr builder e2) |] 
+        "new_knight" builder
+      | SCall ("get_knight_health", [e]) -> 
+        L.build_call get_knight_health_func [| (expr builder e)|] 
+        "get_knight_health" builder
+      | SCall ("new_knave", [e1; e2]) -> 
+        L.build_call new_knave_func [|  (expr builder e1); (expr builder e2) |] 
+        "new_knave" builder
+      | SCall ("get_stealth", [e]) -> 
+        L.build_call get_stealth_func [| (expr builder e) |] 
+        "get_stealth" builder
+      | SCall ("set_stealth", [e1;e2]) -> 
+        L.build_call set_stealth_func [| (expr builder e1); (expr builder e2) |] 
+        "set_stealth" builder
+      | SCall ("get_knave_health", [e]) -> 
+        L.build_call get_knave_health_func [| (expr builder e)|] 
+        "get_knave_health" builder
+      | SCall ("get_x_pos", [e]) ->
+        L.build_call get_knave_x_pos_func[| (expr builder e)|] 
+        "get_x_pos" builder
+      | SCall ("get_y_pos", [e]) ->
+        L.build_call get_knave_y_pos_func [| (expr builder e)|] 
+        "get_y_pos" builder
+      | SCall ("move_knave", [e1;e2]) ->
+        L.build_call move_knave_func [| (expr builder e1); (expr builder e2) |]
+        "move_knave" builder
+      
       | SCall (f, args) ->
          let (fdef, fdecl) = StringMap.find f function_decls in
 	 let llargs = List.rev (List.map (expr builder) (List.rev args)) in

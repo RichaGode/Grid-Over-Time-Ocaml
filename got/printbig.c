@@ -107,7 +107,7 @@ void *new_knight(int x, int y){
   return k;
 };
 
-int get_health(knight *k) {
+int get_knight_health(knight *k) {
   return k->health; 
 };
 
@@ -133,7 +133,6 @@ void *new_knave(int x, int y){
 /** getters for knave **/ 
 int get_stealth(knave *k) {
   return k->stealth; 
-
 }; 
 
 int get_x_pos(knave *k) {
@@ -144,11 +143,22 @@ int get_y_pos(knave *k) {
   return k->y; 
 };
 
+int get_knave_health(knave *k) {
+  return k->health; 
+};
+
+
 /** setters for knave **/ 
 void *set_stealth(knave *k, int val) {
   k->stealth = val; 
   return k; 
 }; 
+
+void *move_knave(knave *k, int x, int y){
+  k->x = k->x+x;
+  k->y = k->y+y;
+  return k;
+}
 
 
 #ifdef BUILD_TEST
