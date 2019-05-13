@@ -158,7 +158,6 @@ let check (globals, functions) =
           let err = "illegal assignment " ^ string_of_typ lt ^ " = " ^ 
             string_of_typ rt ^ " in " ^ string_of_expr ex
           in (check_assign lt rt err, SAssign(var, (rt, e'))) 
-
       | Unop(op, e) as ex -> 
           let (t, e') = expr e in
           let ty = match op with
@@ -182,15 +181,10 @@ let check (globals, functions) =
           in 
           let args' = List.map2 check_call fd.formals [e1; e2]
           in (fd.typ, SCall("pow_func", args'))
-      (* (t, SCall (e1, e2) *)
-      (* | Binop(e1, Access, e2) as call ->
-        let (expr_type, expr_val) = expr e2 in 
-        let function_name = match (expr_type, expr_val) with
-        | (_, "health") -> "get_knave_health" 
-        | (_, "x") -> "get_x_pos"
-        | (_, "y") -> "get_y_pos"
-        | (_, "stealth") -> "get_stealth"
-        | (_, _) -> raise ( Failure ("no such variable exists for this class"))
+      | Binop(e1, Access, e2) as call ->
+        let function_name = match e2 with
+        | health -> "get_knave_health" 
+        | _ -> raise ( Failure (" " ^ string_of_expr e2 ^ " no such variable exists for this class"))
         in 
         let fd = find_func function_name in
           let param_length = List.length fd.formals in
@@ -204,7 +198,7 @@ let check (globals, functions) =
             in (check_assign ft et err, e')
           in 
           let args' = List.map2 check_call fd.formals [e1]
-          in (fd.typ, SCall(function_name, args')) *)
+          in (fd.typ, SCall(function_name, args'))
       | Binop(e1, op, e2) as e -> 
           let (t1, e1') = expr e1 
           and (t2, e2') = expr e2 in
