@@ -99,6 +99,11 @@ in
   let get_knight_health_func : L.llvalue = 
     L.declare_function "get_knight_health" get_knight_health_t the_module in
 
+  let knight_die_t : L.lltype = 
+    L.function_type void_t [| knight_ptr_t |] in
+  let knight_die_func : L.llvalue = 
+    L.declare_function "knight_die" knight_die_t the_module in
+
 
 (*KNAVE FUNCTIONS *)
   let new_knave_t : L.lltype =
@@ -135,6 +140,11 @@ in
       L.function_type knave_ptr_t [| i32_t; i32_t |] in
   let move_knave_func : L.llvalue = 
       L.declare_function "move_knave" move_knave_t the_module in
+
+  let attack_knight_t : L.lltype = 
+      L.function_type knight_ptr_t [| knave_ptr_t; knight_ptr_t|] in
+  let attack_knight_func : L.llvalue = 
+      L.declare_function "attack_knight" attack_knight_t the_module in
 
   (* Define each function (arguments and return type) so we can 
      call it even before we've created its body *)
@@ -285,6 +295,12 @@ in
       | SCall ("move_knave", [e1;e2]) ->
         L.build_call move_knave_func [| (expr builder e1); (expr builder e2) |]
         "move_knave" builder
+      | SCall ("attack_knight", [e1;e2]) ->
+        L.build_call attack_knight_func [| (expr builder e1); (expr builder e2) |]
+        "attack_knight" builder
+      | SCall ("knight_die", [e]) ->
+        L.build_call knight_die_func [| (expr builder e) |]
+        "knight_die" builder
       
       | SCall (f, args) ->
          let (fdef, fdecl) = StringMap.find f function_decls in

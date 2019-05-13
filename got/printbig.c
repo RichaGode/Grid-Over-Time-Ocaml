@@ -111,6 +111,10 @@ int get_knight_health(knight *k) {
   return k->health; 
 };
 
+void knight_die(knight *k) {
+  free(k);
+}
+
 /* knave functions */ 
 
 
@@ -118,7 +122,8 @@ typedef struct Knave {
    int health;
    int x; 
    int y; 
-   int stealth;  
+   int stealth;
+   int attack_strength;  
 } knave; 
 
 void *new_knave(int x, int y){
@@ -127,6 +132,7 @@ void *new_knave(int x, int y){
   k->health = 100;
   k->x = k->y = 0;
   k-> stealth = 1; 
+  k-> attack_strength = 25;
   return k;
 };
 
@@ -158,6 +164,12 @@ void *move_knave(knave *k, int x, int y){
   k->x = k->x+x;
   k->y = k->y+y;
   return k;
+}
+
+/** interactors for knave **/
+void *attack_knight(knave *k, knight *a){
+  a->health = a->health - k->attack_strength;
+  return a;
 }
 
 
