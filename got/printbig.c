@@ -70,23 +70,70 @@ void printbig(int c)
 double pow_func(double a, double b)
 {return pow(a,b);}
 
+/* grid functions */ 
 
 typedef struct Grid {
    int x;
    int y; 
 } grid; 
 
-grid *grid_init(){
-  grid *g = (grid *) malloc(sizeof(struct Grid));
-  g->x = 0;
-  g->y = 0;
+void *grid_init(){
+  struct Grid *g = NULL;
+  g = malloc(sizeof(struct Grid));
+  g->x = g->y = 0;
   return g;
 };
 
 int get_grid_x(grid *g){
-  // printf("%d",g->x); 
-  return g->x;
+  return g->x; 
 }; 
+
+/* knight functions */ 
+
+typedef struct Knight {
+   int health;
+   int x_pos;
+   int y_pos;
+} knight; 
+
+
+void *new_knight(){
+  struct Knight *k = NULL;
+  k = malloc(sizeof(struct Knight));
+  k->health = 100;
+  k->x_pos = k->y_pos = 0;
+  return k;
+};
+
+int get_health(knight *k) {
+  return k->health; 
+};
+
+/* knave functions */ 
+
+
+typedef struct Knave {
+   int health;
+   int x_pos;
+   int y_pos; 
+   int stealth;  
+} knave; 
+
+void *new_knave(){
+  struct Knave *k = NULL;
+  k = malloc(sizeof(struct Knave));
+  k->health = 100;
+  k->x_pos = k->y_pos = 0;
+  k-> stealth = 1; 
+  return k;
+};
+
+void change_stealth(knight *k, int val) {
+  k->health = val; 
+}; 
+
+
+
 
 #ifdef BUILD_TEST
 int main()

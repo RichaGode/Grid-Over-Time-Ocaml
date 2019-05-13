@@ -95,9 +95,9 @@ let check (globals, functions) =
     | Some xo, Some yo -> Some xo 
     | None, Some yo -> Some yo
     | Some xo, None -> Some xo
-  ) temp int_decls in
+  ) temp int_decls in 
   let function_decls = List.fold_left add_func master_function_decls functions
-  in
+  in 
   (* Return a function from our symbol table *)
   let find_func s = 
     try StringMap.find s function_decls

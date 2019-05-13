@@ -33,6 +33,8 @@ let translate (globals, functions) =
   and float_t    = L.double_type context
   and str_t      = L.pointer_type (L.i8_type context)
   and grid_ptr_t = L.pointer_type (L.i8_type context)
+  and knight_ptr_t = L.pointer_type (L.i8_type context)
+  and knave_ptr_t = L.pointer_type (L.i8_type context)
   and void_t     = L.void_type   context 
 in
 
@@ -44,6 +46,8 @@ in
     | A.Void  -> void_t
     | A.String -> str_t
     | A.Grid -> grid_ptr_t
+    | A.Knight -> knight_ptr_t
+    | A.Knave -> knave_ptr_t
   (* TODO Actually add all types *)
   in
 
@@ -80,6 +84,18 @@ in
       L.function_type i32_t [| grid_ptr_t |] in
   let get_grid_x_func : L.llvalue = 
       L.declare_function "get_grid_x" get_grid_x_t the_module in
+
+  let new_knight_t : L.lltype =
+      L.function_type knight_ptr_t [| |] in
+  let new_knight_func : L.llvalue = 
+      L.declare_function "new_knight" new_knight_t the_module in
+
+  let new_knave_t : L.lltype =
+      L.function_type knave_ptr_t [| |] in
+  let new_knave_func : L.llvalue = 
+      L.declare_function "new_knave" new_knave_t the_module in
+
+
 
   (* Define each function (arguments and return type) so we can 
      call it even before we've created its body *)

@@ -6,7 +6,7 @@ open Ast
 
 %token SEMI LPAREN RPAREN LBRACE RBRACE COMMA PLUS MINUS TIMES DIVIDE MOD EXP ASSIGN
 %token NOT EQ NEQ LT LEQ GT GEQ AND OR
-%token RETURN IF ELSE ELIF FOR WHILE INT BOOL FLOAT VOID STRING ACCESS NEW DEF AT_STEP SELF GRID
+%token RETURN IF ELSE ELIF FOR WHILE INT BOOL FLOAT VOID STRING ACCESS NEW DEF AT_STEP SELF GRID KNIGHT KNAVE
 %token <int> LITERAL
 %token <bool> BLIT
 %token <string> ID FLIT STR_LITERAL
@@ -61,6 +61,8 @@ typ:
   | VOID  { Void  }
   | STRING { String  }
   | GRID   { Grid    }
+  | KNIGHT { Knight  }
+  | KNAVE  { Knave   }
 
 vdecl_list:
     /* nothing */    { [] }
