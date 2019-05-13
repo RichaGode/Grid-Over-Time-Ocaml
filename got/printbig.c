@@ -77,10 +77,11 @@ typedef struct Grid {
    int y; 
 } grid; 
 
-void *grid_init(){
+void *grid_init(int n, int m){
   struct Grid *g = NULL;
   g = malloc(sizeof(struct Grid));
-  g->x = g->y = 0;
+  g->x = n;
+  g->y = m; 
   return g;
 };
 
@@ -92,16 +93,17 @@ int get_grid_x(grid *g){
 
 typedef struct Knight {
    int health;
-   int x_pos;
-   int y_pos;
+   int x;
+   int y;
 } knight; 
 
 
-void *new_knight(){
+void *new_knight(int x, int y){
   struct Knight *k = NULL;
   k = malloc(sizeof(struct Knight));
   k->health = 100;
-  k->x_pos = k->y_pos = 0;
+  k->x = x; 
+  k->y = y; 
   return k;
 };
 
@@ -119,7 +121,7 @@ typedef struct Knave {
    int stealth;  
 } knave; 
 
-void *new_knave(){
+void *new_knave(int x, int y){
   struct Knave *k = NULL;
   k = malloc(sizeof(struct Knave));
   k->health = 100;
@@ -128,11 +130,16 @@ void *new_knave(){
   return k;
 };
 
-void change_stealth(knight *k, int val) {
-  k->health = val; 
+int get_stealth(knave *k) {
+  return k->stealth; 
+
 }; 
 
 
+void *set_stealth(knave *k, int val) {
+  k->stealth = val; 
+  return k; 
+}; 
 
 
 #ifdef BUILD_TEST

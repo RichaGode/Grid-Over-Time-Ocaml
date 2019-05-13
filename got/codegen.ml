@@ -76,7 +76,7 @@ in
       L.declare_function "pow_func" pow_t the_module in
 
   let grid_init_t : L.lltype = 
-      L.function_type grid_ptr_t [| |] in
+      L.function_type grid_ptr_t [| i32_t; i32_t |] in
   let grid_init_func : L.llvalue = 
       L.declare_function "grid_init" grid_init_t the_module in
 
@@ -86,15 +86,24 @@ in
       L.declare_function "get_grid_x" get_grid_x_t the_module in
 
   let new_knight_t : L.lltype =
-      L.function_type knight_ptr_t [| |] in
+      L.function_type knight_ptr_t [| i32_t; i32_t|] in
   let new_knight_func : L.llvalue = 
       L.declare_function "new_knight" new_knight_t the_module in
 
+  let set_stealth_t : L.lltype =
+      L.function_type knave_ptr_t [| knave_ptr_t; i32_t |] in
+  let set_stealth_func : L.llvalue =
+      L.declare_function "set_stealth" set_stealth_t the_module in
+
   let new_knave_t : L.lltype =
-      L.function_type knave_ptr_t [| |] in
+      L.function_type knave_ptr_t [| i32_t; i32_t |] in
   let new_knave_func : L.llvalue = 
       L.declare_function "new_knave" new_knave_t the_module in
 
+  let get_stealth_t : L.lltype = 
+      L.function_type i32_t [| knave_ptr_t |] in
+  let get_stealth_func : L.llvalue = 
+      L.declare_function "get_stealth" get_stealth_t the_module in
 
 
   (* Define each function (arguments and return type) so we can 
@@ -201,9 +210,7 @@ in
       | SCall ("print", [e]) | SCall ("printb", [e]) ->
 	  L.build_call printf_func [| int_format_str ; (expr builder e) |]
 	    "printf" builder
-      | SCall ("pow_func", [e1;e2]) -> 
-      (* let e1' = expr builder e1 and e2' = expr builder e2 
-      in L.build_mul e1' e2' "tmp" builder  *) L.build_call pow_func [| (expr builder e1); (expr builder e2) |] "pow_func" builder
+      | SCall ("pow_func", [e1;e2]) ->  L.build_call pow_func [| (expr builder e1); (expr builder e2) |] "pow_func" builder
       | SCall ("printbig", [e]) ->
 	  L.build_call printbig_func [| (expr builder e) |] "printbig" builder
       | SCall ("printf", [e]) -> 
@@ -214,7 +221,11 @@ in
       | SCall ("print_str", [e]) ->
     L.build_call printf_func [| string_format_str ; (expr builder e) |]
       "printf" builder
-      | SCall ("grid_init", []) -> L.build_call grid_init_func [| |] "grid_init" builder
+      | SCall ("grid_init", [e1; e2]) -> L.build_call grid_init_func [| (expr builder e1); (expr builder e2) |] "grid_init" builder
+      | SCall ("new_knight", [e1; e2]) -> L.build_call new_knight_func [| (expr builder e1); (expr builder e2) |] "new_knight" builder
+      | SCall ("get_stealth", [e]) -> L.build_call get_stealth_func [| (expr builder e) |] "get_stealth" builder
+      | SCall ("set_stealth", [e1;e2]) -> L.build_call set_stealth_func [| (expr builder e1); (expr builder e2) |] "set_stealth" builder
+      | SCall ("new_knave", [e1; e2]) -> L.build_call new_knave_func [|  (expr builder e1); (expr builder e2) |] "new_knave" builder
       | SCall (f, args) ->
          let (fdef, fdecl) = StringMap.find f function_decls in
 	 let llargs = List.rev (List.map (expr builder) (List.rev args)) in

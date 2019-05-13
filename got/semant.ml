@@ -44,31 +44,31 @@ let check (globals, functions) =
                                ("print_str", String);]
   in 
   let non_void_decls = 
-    let add_bind_nv map (name, ty1, ty2) = StringMap.add name {
-        typ = Float;
+    let add_bind_nv map (name, ret_type, ty1, ty2) = StringMap.add name {
+        typ = ret_type;
         fname = name; 
         formals = [(ty1, "x"); (ty2, "y")];
         locals = []; body = [] } map
-      in List.fold_left add_bind_nv StringMap.empty [ ("pow_func", Float, Float);]
+      in List.fold_left add_bind_nv StringMap.empty [ ("pow_func", Float, Float, Float); ("set_stealth", Knave, Knave, Int)]
   (* Add function name to symbol table *)
   in 
   let no_arg_decls = 
-    let add_bind_grid map (name) = StringMap.add name {
-      typ = Grid; 
+    let add_bind_object map (name, ret_type, ty1, ty2) = StringMap.add name {
+      typ = ret_type; 
       fname = name;
-      formals = [];
+      formals = [(ty1, "x"); (ty2, "y");];
       locals = []; 
       body = [] } map
-    in List.fold_left add_bind_grid StringMap.empty [("grid_init");]
+    in List.fold_left add_bind_object StringMap.empty [("grid_init", Grid, Int, Int); ("new_knight", Knight, Int, Int); ("new_knave", Knave, Int, Int);]
   in
   let int_decls = 
-    let func map (name, ty1) = StringMap.add name {
-      typ = Int; 
+    let func map (name, ret_type, ty1) = StringMap.add name {
+      typ = ret_type; 
       fname = name;
       formals = [(ty1, "x")];
       locals = []; 
       body = [] } map
-    in List.fold_left func StringMap.empty [("get_grid_x", Grid);]
+    in List.fold_left func StringMap.empty [("get_grid_x", Int, Grid); ("get_stealth", Int, Knave)]
   in 
   let add_func map fd = 
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"
