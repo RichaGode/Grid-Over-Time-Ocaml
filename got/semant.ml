@@ -38,12 +38,10 @@ let check (globals, functions) =
       formals = [(ty, "x")];
       locals = []; body = [] } map
     in List.fold_left add_bind StringMap.empty [ ("print", Int);
-                  			                         ("printb", Bool);
-                  			                         ("printf", Float);
-                  			                         ("printbig", Int);
-                                                 ("print_str", String);
-                                                 ("knight_die", Knight);
-                                               ]
+			                         ("printb", Bool);
+			                         ("printf", Float);
+			                         ("printbig", Int);
+                               ("print_str", String);]
   in 
   let non_void_decls = 
     let add_bind_nv map (name, ret_type, ty1, ty2) = StringMap.add name {
@@ -53,8 +51,7 @@ let check (globals, functions) =
         locals = []; body = [] } map
       in List.fold_left add_bind_nv StringMap.empty [ ("pow_func", Float, Float, Float); 
                                                       ("set_stealth", Knave, Knave, Int);
-                                                      ("move_knave", Knave, Int, Int);
-                                                      ("attack_knight", Knight, Knave, Knight);
+                                                      ("move_knave", Knave, Int, Int)
                                                     ]
   (* Add function name to symbol table *)
   in 
@@ -65,10 +62,7 @@ let check (globals, functions) =
       formals = [(ty1, "x"); (ty2, "y");];
       locals = []; 
       body = [] } map
-    in List.fold_left add_bind_object StringMap.empty [ ("grid_init", Grid, Int, Int); 
-                                                        ("new_knight", Knight, Int, Int); 
-                                                        ("new_knave", Knave, Int, Int);
-                                                      ]
+    in List.fold_left add_bind_object StringMap.empty [("grid_init", Grid, Int, Int); ("new_knight", Knight, Int, Int); ("new_knave", Knave, Int, Int);]
   in
   let int_decls = 
     let func map (name, ret_type, ty1) = StringMap.add name {
@@ -77,13 +71,12 @@ let check (globals, functions) =
       formals = [(ty1, "x")];
       locals = []; 
       body = [] } map
-    in List.fold_left func StringMap.empty [ ("get_grid_x", Int, Grid);
-                                             ("get_stealth", Int, Knave);
-                                             ("get_knave_health", Int, Knave); 
-                                             ("get_x_pos", Int, Knave);
-                                             ("get_y_pos", Int, Knave);
-                                             ("get_knight_health", Int, Knight);
-                                           ]
+    in List.fold_left func StringMap.empty [("get_grid_x", Int, Grid);
+                                           ("get_stealth", Int, Knave);
+                                           ("get_knave_health", Int, Knave); 
+                                           ("get_x_pos", Int, Knave);
+                                           ("get_y_pos", Int, Knave);
+                                           ("get_knight_health", Int, Knight);]
   in 
   let add_func map fd = 
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"
@@ -190,21 +183,21 @@ let check (globals, functions) =
           in (fd.typ, SCall("pow_func", args'))
       | Binop(e1, Access, e2) as call ->
         let function_name = match e2 with
-        | health -> "get_knave_health" 
+        | health -> "get_knight_health" 
         | _ -> raise ( Failure (" " ^ string_of_expr e2 ^ " no such variable exists for this class"))
         in 
         let fd = find_func function_name in
-          let param_length = List.length fd.formals in
-          if List.length[e1] != param_length then
-            raise (Failure ("expecting " ^ string_of_int param_length ^ 
-                              " arguments in " ^ string_of_expr call))
-          else let check_call (ft, _) e =
-            let (et, e') = expr e in 
-            let err = "illegal argument found " ^ string_of_typ et ^
-              " expected " ^ string_of_typ ft ^ " in " ^ string_of_expr e
-            in (check_assign ft et err, e')
-          in 
-          let args' = List.map2 check_call fd.formals [e1]
+            let param_length = List.length fd.formals in
+            if List.length[e1] != param_length then
+              raise (Failure ("expecting " ^ string_of_int param_length ^ 
+                                " arguments in " ^ string_of_expr call))
+            else let check_call (ft, _) e =
+              let (et, e') = expr e in 
+              let err = "illegal argument found " ^ string_of_typ et ^
+                " expected " ^ string_of_typ ft ^ " in " ^ string_of_expr e
+              in (check_assign ft et err, e')
+            in 
+            let args' = List.map2 check_call fd.formals [e1]
           in (fd.typ, SCall(function_name, args'))
       | Binop(e1, op, e2) as e -> 
           let (t1, e1') = expr e1 
