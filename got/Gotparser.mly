@@ -111,6 +111,7 @@ expr:
   | expr OR     expr { Binop($1, Or,    $3)   }
   | expr MOD    expr { Binop($1, Mod,   $3)   }
   | expr EXP    expr { Binop($1, Exp,   $3)   }
+  | expr ACCESS expr { Binop($1, Access,  $3) }
   | MINUS expr %prec NOT      { Unop(Neg, $2)  }
   | NOT expr                  { Unop(Not, $2)  }
   | ID ASSIGN expr            { Assign($1, $3) }

@@ -116,8 +116,8 @@ int get_health(knight *k) {
 
 typedef struct Knave {
    int health;
-   int x_pos;
-   int y_pos; 
+   int x; 
+   int y; 
    int stealth;  
 } knave; 
 
@@ -125,17 +125,26 @@ void *new_knave(int x, int y){
   struct Knave *k = NULL;
   k = malloc(sizeof(struct Knave));
   k->health = 100;
-  k->x_pos = k->y_pos = 0;
+  k->x = k->y = 0;
   k-> stealth = 1; 
   return k;
 };
 
+/** getters for knave **/ 
 int get_stealth(knave *k) {
   return k->stealth; 
 
 }; 
 
+int get_x_pos(knave *k) {
+  return k->x; 
+}; 
 
+int get_y_pos(knave *k) {
+  return k->y; 
+};
+
+/** setters for knave **/ 
 void *set_stealth(knave *k, int val) {
   k->stealth = val; 
   return k; 
