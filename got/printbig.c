@@ -121,7 +121,6 @@ void knight_die(knight *k) {
 
 /* knave functions */ 
 
-
 typedef struct Knave {
    int health;
    int x; 

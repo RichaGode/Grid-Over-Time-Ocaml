@@ -17,7 +17,6 @@ open Ast
 
 %nonassoc NOELSE
 %nonassoc ELSE
-%left ACCESS
 %right ASSIGN
 %left OR
 %left AND
@@ -27,6 +26,7 @@ open Ast
 %left TIMES DIVIDE MOD
 %left EXP
 %right NOT
+%left ACCESS
 
 %%
 
