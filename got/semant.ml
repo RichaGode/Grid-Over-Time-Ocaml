@@ -44,14 +44,13 @@ let check (globals, functions) =
                                ("print_str", String);]
   in 
   let non_void_decls = 
-    let add_bind_nv map (name, ret_type, ty1, ty2) = StringMap.add name {
+    let add_bind_nv map (name, ret_type, ty1, ty2, ty3) = StringMap.add name {
         typ = ret_type;
         fname = name; 
-        formals = [(ty1, "x"); (ty2, "y")];
+        formals = [(ty1, "x"); (ty2, "y"); (ty3, "z")];
         locals = []; body = [] } map
-      in List.fold_left add_bind_nv StringMap.empty [ ("pow_func", Float, Float, Float); 
-                                                      ("set_stealth", Knave, Knave, Int);
-                                                      ("move_knave", Knave, Int, Int)
+      in List.fold_left add_bind_nv StringMap.empty [ 
+                                                      ("move_knave", Knave, Knave, Int, Int)
                                                     ]
   (* Add function name to symbol table *)
   in 
@@ -62,7 +61,10 @@ let check (globals, functions) =
       formals = [(ty1, "x"); (ty2, "y");];
       locals = []; 
       body = [] } map
-    in List.fold_left add_bind_object StringMap.empty [("grid_init", Grid, Int, Int);
+    in List.fold_left add_bind_object StringMap.empty [
+                                                       ("set_stealth", Knave, Knave, Int);
+                                                       ("pow_func", Float, Float, Float); 
+                                                       ("grid_init", Grid, Int, Int);
                                                        ("new_knight", Knight, Int, Int); 
                                                        ("new_knave", Knave, Int, Int);
                                                        ("attack_knight", Knight, Knave, Knight);]

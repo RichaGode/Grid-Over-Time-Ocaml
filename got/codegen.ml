@@ -159,7 +159,7 @@ in
     L.declare_function "get_knave_y_pos" get_knave_y_pos_t the_module in
 
   let move_knave_t : L.lltype = 
-      L.function_type knave_ptr_t [| i32_t; i32_t |] in
+      L.function_type knave_ptr_t [| knave_ptr_t; i32_t; i32_t |] in
   let move_knave_func : L.llvalue = 
       L.declare_function "move_knave" move_knave_t the_module in
 
@@ -328,8 +328,8 @@ in
       | SCall ("get_knave_y_pos", [e]) ->
         L.build_call get_knave_y_pos_func [| (expr builder e)|] 
         "get_knave_y_pos" builder
-      | SCall ("move_knave", [e1;e2]) ->
-        L.build_call move_knave_func [| (expr builder e1); (expr builder e2) |]
+      | SCall ("move_knave", [e1;e2;e3]) ->
+        L.build_call move_knave_func [| (expr builder e1); (expr builder e2); (expr builder e3) |]
         "move_knave" builder
       | SCall ("attack_knight", [e1;e2]) ->
         L.build_call attack_knight_func [| (expr builder e1); (expr builder e2) |]

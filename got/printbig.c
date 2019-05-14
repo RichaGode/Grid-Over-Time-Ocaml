@@ -77,11 +77,11 @@ typedef struct Grid {
    int y; 
 } grid; 
 
-void *grid_init(int n, int m){
+void *grid_init(int x, int y){
   struct Grid *g = NULL;
   g = malloc(sizeof(struct Grid));
-  g->x = n;
-  g->y = m; 
+  g->x = x;
+  g->y = y; 
   return g;
 };
 
@@ -142,7 +142,8 @@ void *new_knave(int x, int y){
   struct Knave *k = NULL;
   k = malloc(sizeof(struct Knave));
   k->health = 100;
-  k->x = k->y = 0;
+  k->x = x;
+  k->y = y;
   k-> stealth = 1; 
   k-> attack_strength = 25;
   return k;
