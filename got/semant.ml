@@ -192,31 +192,29 @@ let check (globals, functions) =
           let args' = List.map2 check_call fd.formals [e1; e2]
           in (fd.typ, SCall("pow_func", args'))
       | Binop(e1, Access, e2) as call ->
-        let (ty, e') = expr e1 in
-        let ty = string_of_typ ty in 
-        if ty = "knight" then 
-          let e2 = string_of_expr e2 in 
-          let function_name = match e2 with
-          | "health" -> "get_knight_health" 
-          | "x" -> "get_knight_x_pos"
-          | "y" -> "get_knight_y_pos"
-          | _ -> raise ( Failure (" " ^ e2 ^ " no such variable exists for this class"))
-        else 
-
-        in 
+        let (ty, e') = expr e1 in 
+        let ty1 = string_of_typ ty
+        and e2' = string_of_expr e2 in
+          let function_name = match e2' with
+            | "health" -> "get_" ^ ty1 ^ "_health"
+            | "x" -> "get_" ^ ty1 ^ "_x_pos"
+            | "y" -> "get_" ^ ty1 ^ "_y_pos"
+            | "stealth" -> "get_stealth"
+            | _ -> raise ( Failure ("the following variable: " ^ e2' ^ ", does not exist for this class"))
+        in
         let fd = find_func function_name in
-            let param_length = List.length fd.formals in
-            if List.length[e1] != param_length then
-              raise (Failure ("expecting " ^ string_of_int param_length ^ 
-                                " arguments in " ^ string_of_expr call))
-            else let check_call (ft, _) e =
-              let (et, e') = expr e in 
-              let err = "illegal argument found " ^ string_of_typ et ^
-                " expected " ^ string_of_typ ft ^ " in " ^ string_of_expr e
-              in (check_assign ft et err, e')
-            in 
-            let args' = List.map2 check_call fd.formals [e1]
-          in (fd.typ, SCall(function_name, args'))
+        let param_length = List.length fd.formals in
+        if List.length [e1;] != param_length then
+          raise (Failure ("expecting " ^ string_of_int param_length ^ 
+                          " arguments in " ^ string_of_expr call))
+        else let check_call (ft, _) e = 
+          let (et, e') = expr e in 
+          let err = function_name ^ "illegal argument found " ^ string_of_typ et ^
+            " expected " ^ string_of_typ ft ^ " in " ^ string_of_expr e
+          in (check_assign ft et err, e')
+        in 
+        let args' = List.map2 check_call fd.formals [e1;]
+        in (fd.typ, SCall(function_name, args'))
       | Binop(e1, op, e2) as e -> 
           let (t1, e1') = expr e1 
           and (t2, e2') = expr e2 in
@@ -249,6 +247,21 @@ let check (globals, functions) =
           in 
           let args' = List.map2 check_call fd.formals args
           in (fd.typ, SCall(fname, args'))
+(*         | Call("grid_end", args) as call ->
+          let fd = find_func fname in
+          let param_length = List.length fd.formals in
+          if List.length args != param_length then
+            raise (Failure ("expecting " ^ string_of_int param_length ^ 
+                            " arguments in " ^ string_of_expr call))
+          else let check_call (ft, _) e = 
+            let (et, e') = expr e in 
+            let err = fname ^ "illegal argument found " ^ string_of_typ et ^
+              " expected " ^ string_of_typ ft ^ " in " ^ string_of_expr e
+            in (check_assign ft et err, e')
+          in 
+          let args' = List.map2 check_call fd.formals args
+          in (fd.typ, SCall(fname, args')) *)
+
     in
 
     let check_bool_expr e = 
