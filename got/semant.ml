@@ -80,7 +80,8 @@ let check (globals, functions) =
                                            ("get_x_pos", Int, Knave);
                                            ("get_y_pos", Int, Knave);
                                            ("get_knight_health", Int, Knight);
-                                           ("knight_die", Void, Knight);]
+                                           ("knight_die", Void, Knight);
+                                           ("knave_die", Void, Knave);]
   in 
   let add_func map fd = 
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"
