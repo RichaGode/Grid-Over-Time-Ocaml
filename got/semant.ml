@@ -190,16 +190,16 @@ let check (globals, functions) =
           let args' = List.map2 check_call fd.formals [e1; e2]
           in (fd.typ, SCall("pow_func", args'))
       | Binop(e1, Access, e2) as call ->
-(*         let (ty, e') = e1 in
+        let (ty, e') = expr e1 in
         let ty = string_of_typ ty in 
-        let ty_match = match ty with
-        | "knight" ->  *)
-        let e2 = string_of_expr e2 in 
-        let function_name = match e2 with
-        | "health" -> "get_knight_health" 
-        | "x" -> "get_knight_x_pos"
-        | "y" -> "get_knight_y_pos"
-        | _ -> raise ( Failure (" " ^ e2 ^ " no such variable exists for this class"))
+        if ty = "knight" then 
+          let e2 = string_of_expr e2 in 
+          let function_name = match e2 with
+          | "health" -> "get_knight_health" 
+          | "x" -> "get_knight_x_pos"
+          | "y" -> "get_knight_y_pos"
+          | _ -> raise ( Failure (" " ^ e2 ^ " no such variable exists for this class"))
+        else 
 
         in 
         let fd = find_func function_name in
