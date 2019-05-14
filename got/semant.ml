@@ -81,7 +81,8 @@ let check (globals, functions) =
                                            ("get_y_pos", Int, Knave);
                                            ("get_knight_health", Int, Knight);
                                            ("knight_die", Void, Knight);
-                                           ("knave_die", Void, Knave);]
+                                           ("knave_die", Void, Knave);
+                                           ("grid_end", Void, Grid);]
   in 
   let add_func map fd = 
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"

@@ -82,6 +82,11 @@ in
   let grid_init_func : L.llvalue = 
       L.declare_function "grid_init" grid_init_t the_module in
 
+  let grid_end_t : L.lltype = 
+    L.function_type void_t [| grid_ptr_t |] in
+  let grid_end_func : L.llvalue = 
+    L.declare_function "grid_end" grid_end_t the_module in
+
   let get_grid_x_t : L.lltype = 
       L.function_type i32_t [| grid_ptr_t |] in
   let get_grid_x_func : L.llvalue = 
@@ -275,6 +280,9 @@ in
       | SCall ("grid_init", [e1; e2]) -> 
         L.build_call grid_init_func [| (expr builder e1); (expr builder e2) |] 
         "grid_init" builder
+      | SCall ("grid_end", [e]) ->
+      L.build_call grid_end_func [| (expr builder e) |]
+      "" builder
       | SCall ("new_knight", [e1; e2]) -> 
         L.build_call new_knight_func [| (expr builder e1); (expr builder e2) |] 
         "new_knight" builder

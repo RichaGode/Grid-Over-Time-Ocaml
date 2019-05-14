@@ -85,6 +85,10 @@ void *grid_init(int n, int m){
   return g;
 };
 
+void grid_end(grid *g) {
+  free(g);
+};
+
 int get_grid_x(grid *g){
   return g->x; 
 }; 
