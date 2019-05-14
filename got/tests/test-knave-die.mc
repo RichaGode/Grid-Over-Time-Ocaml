@@ -7,6 +7,7 @@ int main()
   n = new_knight(10, 20);
   a = 2; 
   knave_die(k);
+  print(get_knave_x_pos(k));
   print(a); 
   return 0;
 
