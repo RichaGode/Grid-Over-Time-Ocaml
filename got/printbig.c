@@ -115,6 +115,15 @@ int get_knight_health(knight *k) {
   return k->health; 
 };
 
+int get_knight_x_pos(knight *k) {
+  return k->x; 
+};
+
+int get_knight_y_pos(knight *k) {
+  return k->y; 
+};
+
+
 void knight_die(knight *k) {
   free(k);
 }; 
@@ -150,11 +159,11 @@ int get_stealth(knave *k) {
   return k->stealth; 
 }; 
 
-int get_x_pos(knave *k) {
+int get_knave_x_pos(knave *k) {
   return k->x; 
 }; 
 
-int get_y_pos(knave *k) {
+int get_knave_y_pos(knave *k) {
   return k->y; 
 };
 

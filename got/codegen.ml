@@ -104,10 +104,22 @@ in
   let get_knight_health_func : L.llvalue = 
     L.declare_function "get_knight_health" get_knight_health_t the_module in
 
+  let get_knight_x_pos_t : L.lltype = 
+    L.function_type i32_t [| knight_ptr_t |] in
+  let get_knight_x_pos_func : L.llvalue = 
+    L.declare_function "get_knight_x_pos" get_knight_x_pos_t the_module in
+
+  let get_knight_y_pos_t : L.lltype = 
+    L.function_type i32_t [| knight_ptr_t |] in
+  let get_knight_y_pos_func : L.llvalue = 
+    L.declare_function "get_knight_y_pos" get_knight_y_pos_t the_module in
+
   let knight_die_t : L.lltype = 
     L.function_type void_t [| knight_ptr_t |] in
   let knight_die_func : L.llvalue = 
     L.declare_function "knight_die" knight_die_t the_module in
+
+
 
 
 (*KNAVE FUNCTIONS *)
@@ -139,12 +151,12 @@ in
   let get_knave_x_pos_t : L.lltype = 
     L.function_type i32_t [| knave_ptr_t |] in
   let get_knave_x_pos_func : L.llvalue = 
-    L.declare_function "get_x_pos" get_knave_x_pos_t the_module in
+    L.declare_function "get_knave_x_pos" get_knave_x_pos_t the_module in
 
   let get_knave_y_pos_t : L.lltype = 
     L.function_type i32_t [| knave_ptr_t |] in
   let get_knave_y_pos_func : L.llvalue = 
-    L.declare_function "get_y_pos" get_knave_y_pos_t the_module in
+    L.declare_function "get_knave_y_pos" get_knave_y_pos_t the_module in
 
   let move_knave_t : L.lltype = 
       L.function_type knave_ptr_t [| i32_t; i32_t |] in
@@ -289,6 +301,15 @@ in
       | SCall ("get_knight_health", [e]) -> 
         L.build_call get_knight_health_func [| (expr builder e)|] 
         "get_knight_health" builder
+      | SCall ("get_knight_x_pos", [e]) ->
+        L.build_call get_knight_x_pos_func[| (expr builder e)|] 
+        "get_knight_x_pos" builder
+      | SCall ("get_knight_y_pos", [e]) ->
+        L.build_call get_knight_y_pos_func [| (expr builder e)|] 
+        "get_knight_y_pos" builder
+
+
+
       | SCall ("new_knave", [e1; e2]) -> 
         L.build_call new_knave_func [|  (expr builder e1); (expr builder e2) |] 
         "new_knave" builder
@@ -301,12 +322,12 @@ in
       | SCall ("get_knave_health", [e]) -> 
         L.build_call get_knave_health_func [| (expr builder e)|] 
         "get_knave_health" builder
-      | SCall ("get_x_pos", [e]) ->
+      | SCall ("get_knave_x_pos", [e]) ->
         L.build_call get_knave_x_pos_func[| (expr builder e)|] 
-        "get_x_pos" builder
-      | SCall ("get_y_pos", [e]) ->
+        "get_knave_x_pos" builder
+      | SCall ("get_knave_y_pos", [e]) ->
         L.build_call get_knave_y_pos_func [| (expr builder e)|] 
-        "get_y_pos" builder
+        "get_knave_y_pos" builder
       | SCall ("move_knave", [e1;e2]) ->
         L.build_call move_knave_func [| (expr builder e1); (expr builder e2) |]
         "move_knave" builder

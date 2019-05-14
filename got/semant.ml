@@ -77,10 +77,12 @@ let check (globals, functions) =
     in List.fold_left func StringMap.empty [("get_grid_x", Int, Grid);
                                            ("get_stealth", Int, Knave);
                                            ("get_knave_health", Int, Knave); 
-                                           ("get_x_pos", Int, Knave);
-                                           ("get_y_pos", Int, Knave);
+                                           ("get_knave_x_pos", Int, Knave);
+                                           ("get_knave_y_pos", Int, Knave);
                                            ("get_knight_health", Int, Knight);
                                            ("knight_die", Void, Knight);
+                                           ("get_knight_x_pos", Int, Knight);
+                                           ("get_knight_y_pos", Int, Knight);
                                            ("knave_die", Void, Knave);
                                            ("grid_end", Void, Grid);]
   in 
@@ -190,6 +192,8 @@ let check (globals, functions) =
       | Binop(e1, Access, e2) as call ->
         let function_name = match e2 with
         | health -> "get_knight_health" 
+        | x -> "get_knight_x_pos"
+        | y -> "get_knight_y_pos"
         | _ -> raise ( Failure (" " ^ string_of_expr e2 ^ " no such variable exists for this class"))
         in 
         let fd = find_func function_name in
