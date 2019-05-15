@@ -6,6 +6,7 @@
 #include <math.h>
 #include <stdlib.h>
 
+// extern void free(void *value);
 /*
  * Font information: one byte per row, 8 rows per character
  * In order, space, 0-9, A-Z

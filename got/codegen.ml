@@ -35,6 +35,7 @@ let translate (globals, functions) =
   and grid_ptr_t = L.pointer_type (L.i8_type context)
   and knight_ptr_t = L.pointer_type (L.i8_type context)
   and knave_ptr_t = L.pointer_type (L.i8_type context)
+  and void_ptr_t = L.pointer_type (L.i8_type context)
   and void_t     = L.void_type   context 
 in
 
@@ -123,8 +124,6 @@ in
     L.function_type void_t [| knight_ptr_t |] in
   let knight_die_func : L.llvalue = 
     L.declare_function "knight_die" knight_die_t the_module in
-
-
 
 
 (*KNAVE FUNCTIONS *)
@@ -345,8 +344,7 @@ in
         L.build_call knight_die_func [| (expr builder e) |]
         "" builder
       | SCall ("knave_die", [e]) ->
-        L.build_call knave_die_func [| (expr builder e) |]
-        "" builder
+        L.build_free (expr builder e) builder 
       | SCall (f, args) ->
          let (fdef, fdecl) = StringMap.find f function_decls in
 	 let llargs = List.rev (List.map (expr builder) (List.rev args)) in
