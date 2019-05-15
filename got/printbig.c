@@ -128,6 +128,7 @@ typedef struct Knight {
    int health;
    int x;
    int y;
+   int attack_strength;
 } knight; 
 
 
@@ -135,6 +136,7 @@ void *new_knight(int x, int y){
   struct Knight *k = NULL;
   k = malloc(sizeof(struct Knight));
   k->health = 100;
+  k-> attack_strength = 50;
   k->x = x; 
   k->y = y; 
   return k;
@@ -152,10 +154,27 @@ int get_knight_y_pos(knight *k) {
   return k->y; 
 };
 
+void *move_knight(knight *k, int x, int y){
+  k->x = k->x+x;
+  k->y = k->y+y;
+  return k;
+}
+
+int get_knight_attack(knight *k) {
+  return k->attack_strength;
+}
+
+void *set_knight_attack(knight *k, int x) {
+  k->attack_strength = x;
+  return k;
+}
 
 void knight_die(knight *k) {
   free(k);
 }; 
+
+
+
 
 /* knave functions */ 
 
@@ -183,8 +202,6 @@ void knave_die(knave *k) {
   k = NULL; 
 }; 
 
-
-
 /** getters for knave **/ 
 int get_stealth(knave *k) {
   return k->stealth; 
@@ -202,7 +219,6 @@ int get_knave_health(knave *k) {
   return k->health; 
 };
 
-
 /** setters for knave **/ 
 void *set_stealth(knave *k, int val) {
   k->stealth = val; 
@@ -215,8 +231,23 @@ void *move_knave(knave *k, int x, int y){
   return k;
 }
 
+int get_knave_attack(knave *k) {
+  return k->attack_strength;
+}
+
+void *set_knave_attack(knave *k, int x) {
+  k->attack_strength = x;
+  return k;
+}
+
 /** interactors for knave **/
 knight *attack_knight(knave *k, knight *a){
+  a->health = a->health - k->attack_strength;
+  return a;
+}
+
+/** interactors for knave **/
+knave *attack_knave(knight *k, knave *a){
   a->health = a->health - k->attack_strength;
   return a;
 }

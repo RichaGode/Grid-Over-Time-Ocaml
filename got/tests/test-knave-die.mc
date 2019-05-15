@@ -7,7 +7,7 @@ int main()
   n = new_knight(10, 20);
   a = 2; 
   knave_die(k);
-  print(k.health);
+  /#print(k.health);#/
   print(a); 
   return 0;
 

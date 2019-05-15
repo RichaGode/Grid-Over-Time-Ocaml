@@ -50,7 +50,8 @@ let check (globals, functions) =
         formals = [(ty1, "x"); (ty2, "y"); (ty3, "z")];
         locals = []; body = [] } map
       in List.fold_left add_bind_nv StringMap.empty [ 
-                                                      ("move_knave", Knave, Knave, Int, Int)
+                                                      ("move_knave", Knave, Knave, Int, Int); 
+                                                      ("move_knight", Knight, Knight, Int, Int)
                                                     ]
   (* Add function name to symbol table *)
   in 
@@ -69,7 +70,11 @@ let check (globals, functions) =
                                                        ("new_knave", Knave, Int, Int);
                                                        ("attack_knight", Knight, Knave, Knight);
                                                        ("set_max_time", Grid, Grid, Int);
-                                                       ("set_current_time", Grid, Grid, Int);]
+                                                       ("set_current_time", Grid, Grid, Int);
+                                                       ("attack_knave", Knave, Knight, Knave);
+                                                       ("set_knight_attack", Knight, Knight, Int);
+                                                       ("set_knave_attack", Knave, Knave, Int)
+                                                      ]
   in
   let int_decls = 
     let func map (name, ret_type, ty1) = StringMap.add name {
@@ -78,20 +83,24 @@ let check (globals, functions) =
       formals = [(ty1, "x")];
       locals = []; 
       body = [] } map
-    in List.fold_left func StringMap.empty [("get_grid_x", Int, Grid);
+    in List.fold_left func StringMap.empty [
+                                            ("get_grid_x", Int, Grid);
                                             ("get_grid_y", Int, Grid);
-                                           ("get_stealth", Int, Knave);
-                                           ("get_knave_health", Int, Knave); 
-                                           ("get_knave_x_pos", Int, Knave);
-                                           ("get_knave_y_pos", Int, Knave);
-                                           ("get_knight_health", Int, Knight);
-                                           ("knight_die", Void, Knight);
-                                           ("get_knight_x_pos", Int, Knight);
-                                           ("get_knight_y_pos", Int, Knight);
-                                           ("knave_die", Void, Knave);
-                                           ("grid_end", Void, Grid);
-                                           ("get_max_time", Int, Grid);
-                                           ("get_current_time", Int, Grid);]
+                                            ("grid_end", Void, Grid);
+                                            ("get_max_time", Int, Grid);
+                                            ("get_current_time", Int, Grid);
+                                            ("get_stealth", Int, Knave);
+                                            ("get_knave_health", Int, Knave); 
+                                            ("get_knave_x_pos", Int, Knave);
+                                            ("get_knave_y_pos", Int, Knave);
+                                            ("knave_die", Void, Knave);
+                                            ("get_knight_health", Int, Knight);
+                                            ("knight_die", Void, Knight);
+                                            ("get_knight_x_pos", Int, Knight);
+                                            ("get_knight_y_pos", Int, Knight);
+                                            ("get_knight_attack", Int, Knight);
+                                            ("get_knave_attack", Int, Knave)
+                                           ]
   in 
   let add_func map fd = 
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"
@@ -207,6 +216,7 @@ let check (globals, functions) =
             | "stealth" -> "get_stealth"
             | "current_time" -> "get_current_time"
             | "max_time" -> "get_max_time"
+            | "attack_strength" -> "get_" ^ ty1 ^ "_attack"
             | _ -> raise ( Failure ("the following variable: " ^ e2' ^ ", does not exist for this class"))
         in
         let fd = find_func function_name in

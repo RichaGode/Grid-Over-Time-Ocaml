@@ -140,6 +140,21 @@ in
   let get_knight_y_pos_func : L.llvalue = 
     L.declare_function "get_knight_y_pos" get_knight_y_pos_t the_module in
 
+  let move_knight_t : L.lltype = 
+      L.function_type knight_ptr_t [| knight_ptr_t; i32_t; i32_t |] in
+  let move_knight_func : L.llvalue = 
+      L.declare_function "move_knight" move_knight_t the_module in
+
+  let get_knight_attack_t : L.lltype = 
+    L.function_type i32_t [| knight_ptr_t |] in
+  let get_knight_attack_func : L.llvalue = 
+    L.declare_function "get_knight_attack" get_knight_attack_t the_module in
+
+  let set_knight_attack_t : L.lltype = 
+    L.function_type knight_ptr_t [| knight_ptr_t; i32_t|] in
+  let set_knight_attack_func : L.llvalue = 
+    L.declare_function "set_knight_attack" set_knight_attack_t the_module in
+
   let knight_die_t : L.lltype = 
     L.function_type void_t [| knight_ptr_t |] in
   let knight_die_func : L.llvalue = 
@@ -187,11 +202,26 @@ in
   let move_knave_func : L.llvalue = 
       L.declare_function "move_knave" move_knave_t the_module in
 
+  let get_knave_attack_t : L.lltype = 
+    L.function_type i32_t [| knave_ptr_t |] in
+  let get_knave_attack_func : L.llvalue = 
+    L.declare_function "get_knave_attack" get_knave_attack_t the_module in
+
+  let set_knave_attack_t : L.lltype = 
+    L.function_type knave_ptr_t [| knave_ptr_t; i32_t|] in
+  let set_knave_attack_func : L.llvalue = 
+    L.declare_function "set_knave_attack" set_knave_attack_t the_module in
+
 (* INTERACTION FUNCTIONS *)
   let attack_knight_t : L.lltype = 
       L.function_type knight_ptr_t [| knave_ptr_t; knight_ptr_t|] in
   let attack_knight_func : L.llvalue = 
       L.declare_function "attack_knight" attack_knight_t the_module in
+
+  let attack_knave_t : L.lltype = 
+      L.function_type knave_ptr_t [| knight_ptr_t; knave_ptr_t|] in
+  let attack_knave_func : L.llvalue = 
+      L.declare_function "attack_knave" attack_knave_t the_module in
 
 
   (* Define each function (arguments and return type) so we can 
@@ -352,6 +382,18 @@ in
       | SCall ("knight_die", [e]) ->
         L.build_call knight_die_func [| (expr builder e) |]
         "" builder
+      | SCall ("move_knight", [e1;e2;e3]) ->
+        L.build_call move_knight_func [| (expr builder e1); (expr builder e2); (expr builder e3) |]
+        "move_knight" builder
+      | SCall ("get_knight_attack", [e]) ->
+        L.build_call get_knight_attack_func [| (expr builder e)|] 
+        "get_knight_attack" builder
+      | SCall ("set_knight_attack", [e1;e2]) ->
+        L.build_call set_knight_attack_func [| (expr builder e1); (expr builder e2) |]
+        "set_knight_attack" builder
+      | SCall ("attack_knave", [e1;e2]) ->
+        L.build_call attack_knave_func [| (expr builder e1); (expr builder e2) |]
+        "attack_knave" builder
 
 
       | SCall ("new_knave", [e1; e2]) -> 
@@ -375,6 +417,12 @@ in
       | SCall ("move_knave", [e1;e2;e3]) ->
         L.build_call move_knave_func [| (expr builder e1); (expr builder e2); (expr builder e3) |]
         "move_knave" builder
+      | SCall ("get_knave_attack", [e]) ->
+        L.build_call get_knave_attack_func [| (expr builder e)|] 
+        "get_knave_attack" builder
+      | SCall ("set_knave_attack", [e1;e2]) ->
+        L.build_call set_knave_attack_func [| (expr builder e1); (expr builder e2) |]
+        "set_knave_attack" builder
       | SCall ("attack_knight", [e1;e2]) ->
         L.build_call attack_knight_func [| (expr builder e1); (expr builder e2) |]
         "attack_knight" builder
