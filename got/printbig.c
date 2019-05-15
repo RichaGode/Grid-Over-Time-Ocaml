@@ -99,11 +99,11 @@ void grid_end(grid *g) {
   free(g);
 };
 
-int get_grid_x(grid *g){
+int get_grid_x_pos(grid *g){
   return g->x; 
 }; 
 
-int get_grid_y(grid *g){
+int get_grid_y_pos(grid *g){
   return g->y; 
 };
 

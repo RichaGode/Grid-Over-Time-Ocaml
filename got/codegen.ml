@@ -95,12 +95,12 @@ in
   let get_grid_x_t : L.lltype = 
       L.function_type i32_t [| grid_ptr_t |] in
   let get_grid_x_func : L.llvalue = 
-      L.declare_function "get_grid_x" get_grid_x_t the_module in
+      L.declare_function "get_grid_x_pos" get_grid_x_t the_module in
 
   let get_grid_y_t : L.lltype = 
       L.function_type i32_t [| grid_ptr_t |] in
   let get_grid_y_func : L.llvalue = 
-      L.declare_function "get_grid_y" get_grid_y_t the_module in
+      L.declare_function "get_grid_y_pos" get_grid_y_t the_module in
 
   let get_max_time_t : L.lltype = 
       L.function_type i32_t [| grid_ptr_t |] in
@@ -354,10 +354,10 @@ in
         "grid_init" builder
       | SCall ("get_grid_x", [e]) -> 
         L.build_call get_grid_x_func [| (expr builder e) |]
-        "get_grid_x" builder
+        "get_grid_x_pos" builder
       | SCall ("get_grid_y", [e]) -> 
         L.build_call get_grid_y_func [| (expr builder e) |]
-        "get_grid_y" builder
+        "get_grid_y_pos" builder
       | SCall ("get_max_time", [e]) -> 
         L.build_call get_max_time_func [| (expr builder e) |]
         "get_max_time" builder
