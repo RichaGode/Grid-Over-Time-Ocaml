@@ -227,6 +227,11 @@ in
   let attack_knave_func : L.llvalue = 
       L.declare_function "attack_knave" attack_knave_t the_module in
 
+  let near_t : L.lltype = 
+      L.function_type i32_t [| knight_ptr_t; knave_ptr_t; i32_t |] in
+  let near_func : L.llvalue = 
+      L.declare_function "near" near_t the_module in
+
 
   (* Define each function (arguments and return type) so we can 
      call it even before we've created its body *)
@@ -436,6 +441,9 @@ in
         "attack_knight" builder
       | SCall ("knave_die", [e]) -> let e' = string_of_sexpr e in 
         StringMap.remove e' global_vars; L.build_free (expr builder e) builder
+      | SCall ("near", [e1;e2;e3]) ->
+        L.build_call near_func [| (expr builder e1); (expr builder e2); (expr builder e3) |]
+        "near" builder
       | SCall (f, args) ->
          let (fdef, fdecl) = StringMap.find f function_decls in
 	 let llargs = List.rev (List.map (expr builder) (List.rev args)) in

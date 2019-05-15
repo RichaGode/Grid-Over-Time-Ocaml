@@ -268,6 +268,18 @@ knave *attack_knave(knight *k, knave *a){
     }
 }
 
+int near(knight *k, knave *a, int thresh){
+  if ( abs( (k->x) - (a->x)) <= thresh ){
+    return 1;
+  }
+  
+  if ( abs( (k->y) - (a->y)) <= thresh ){
+    return 1;
+  }
+  
+  return 0;
+}
+
 
 #ifdef BUILD_TEST
 int main()
