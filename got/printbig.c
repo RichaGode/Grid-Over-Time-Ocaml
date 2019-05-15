@@ -180,6 +180,7 @@ void *new_knave(int x, int y){
 
 void knave_die(knave *k) {
   free(k);
+  k = NULL; 
 }; 
 
 

@@ -378,10 +378,8 @@ in
       | SCall ("attack_knight", [e1;e2]) ->
         L.build_call attack_knight_func [| (expr builder e1); (expr builder e2) |]
         "attack_knight" builder
-      | SCall ("knave_die", [e]) ->
-        L.build_free (expr builder e) builder 
-
-
+      | SCall ("knave_die", [e]) -> let e' = string_of_sexpr e in 
+        StringMap.remove e' global_vars; L.build_free (expr builder e) builder
       | SCall (f, args) ->
          let (fdef, fdecl) = StringMap.find f function_decls in
 	 let llargs = List.rev (List.map (expr builder) (List.rev args)) in
