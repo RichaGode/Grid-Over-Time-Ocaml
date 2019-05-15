@@ -21,3 +21,20 @@ int main()
 
   return 0;
 }
+
+
+
+initalize all objects
+
+Grid g;
+Knight k;
+Knave j;
+g = grid_init(100, 100);
+
+k = new_knight()
+
+print(grid.max_time);
+
+
+
+

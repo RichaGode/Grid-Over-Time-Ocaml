@@ -99,7 +99,8 @@ let check (globals, functions) =
                                             ("get_knight_x_pos", Int, Knight);
                                             ("get_knight_y_pos", Int, Knight);
                                             ("get_knight_attack", Int, Knight);
-                                            ("get_knave_attack", Int, Knave)
+                                            ("get_knave_attack", Int, Knave);
+                                            ("random", Int, Int); 
                                            ]
   in 
   let add_func map fd = 

@@ -67,6 +67,11 @@ void printbig(int c)
   } while (index & 0x7); 
 }
 
+int random(int max) {
+    int ret = rand() % max; 
+    return ret; 
+}; 
+
 
 double pow_func(double a, double b)
 {return pow(a,b);}

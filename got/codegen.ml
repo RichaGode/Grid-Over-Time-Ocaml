@@ -76,6 +76,10 @@ in
   let pow_func : L.llvalue = 
       L.declare_function "pow_func" pow_t the_module in
 
+  let random_t : L.lltype = 
+      L.var_arg_function_type i32_t [| i32t |] in
+  let random_func : L.llvalue = 
+      L.declare_function "random" random_t the_module in
 
 (*GRID FUNCTIONS *)
   let grid_init_t : L.lltype = 
@@ -340,7 +344,11 @@ in
       | SCall ("print_str", [e]) ->
         L.build_call printf_func [| string_format_str ; (expr builder e) |]
         "printf" builder
+      | SCall ("random", [e]) ->
+        L.build_call random_func [| (expr builder e) |] 
+        "random" builder
 
+        
       | SCall ("grid_init", [e1; e2]) -> 
         L.build_call grid_init_func [| (expr builder e1); (expr builder e2) |] 
         "grid_init" builder
