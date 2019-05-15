@@ -98,6 +98,26 @@ in
   let get_grid_y_func : L.llvalue = 
       L.declare_function "get_grid_y" get_grid_y_t the_module in
 
+  let get_max_time_t : L.lltype = 
+      L.function_type i32_t [| grid_ptr_t |] in
+  let get_max_time_func : L.llvalue = 
+      L.declare_function "get_max_time" get_max_time_t the_module in
+
+  let get_current_time_t : L.lltype = 
+      L.function_type i32_t [| grid_ptr_t |] in
+  let get_current_time_func : L.llvalue = 
+      L.declare_function "get_current_time" get_current_time_t the_module in
+
+  let set_max_time_t : L.lltype =
+      L.function_type grid_ptr_t [| grid_ptr_t; i32_t |] in
+  let set_max_time_func : L.llvalue =
+      L.declare_function "set_max_time" set_max_time_t the_module in
+
+  let set_current_time_t : L.lltype =
+      L.function_type grid_ptr_t [| grid_ptr_t; i32_t |] in
+  let set_current_time_func : L.llvalue =
+      L.declare_function "set_current_time" set_current_time_t the_module in
+
 
 (*KNIGHT FUNCTIONS *)
   let new_knight_t : L.lltype =
@@ -287,21 +307,36 @@ in
       | SCall ("printf", [e]) -> 
 	      L.build_call printf_func [| float_format_str ; (expr builder e) |]
 	      "printf" builder
+      | SCall ("print_str", [e]) ->
+        L.build_call printf_func [| string_format_str ; (expr builder e) |]
+        "printf" builder
+
+      | SCall ("grid_init", [e1; e2]) -> 
+        L.build_call grid_init_func [| (expr builder e1); (expr builder e2) |] 
+        "grid_init" builder
       | SCall ("get_grid_x", [e]) -> 
         L.build_call get_grid_x_func [| (expr builder e) |]
         "get_grid_x" builder
       | SCall ("get_grid_y", [e]) -> 
         L.build_call get_grid_y_func [| (expr builder e) |]
         "get_grid_y" builder
-      | SCall ("print_str", [e]) ->
-        L.build_call printf_func [| string_format_str ; (expr builder e) |]
-        "printf" builder
-      | SCall ("grid_init", [e1; e2]) -> 
-        L.build_call grid_init_func [| (expr builder e1); (expr builder e2) |] 
-        "grid_init" builder
+      | SCall ("get_max_time", [e]) -> 
+        L.build_call get_max_time_func [| (expr builder e) |]
+        "get_max_time" builder
+      | SCall ("get_current_time", [e]) -> 
+        L.build_call get_current_time_func [| (expr builder e) |]
+        "get_current_time" builder
+      | SCall ("set_max_time", [e1;e2]) -> 
+        L.build_call set_max_time_func [| (expr builder e1); (expr builder e2) |] 
+        "set_max_time" builder
+      | SCall ("set_current_time", [e1;e2]) -> 
+        L.build_call set_current_time_func [| (expr builder e1); (expr builder e2) |] 
+        "set_current_time" builder
       | SCall ("grid_end", [e]) ->
       L.build_call grid_end_func [| (expr builder e) |]
       "" builder
+      
+
       | SCall ("new_knight", [e1; e2]) -> 
         L.build_call new_knight_func [| (expr builder e1); (expr builder e2) |] 
         "new_knight" builder
@@ -314,6 +349,9 @@ in
       | SCall ("get_knight_y_pos", [e]) ->
         L.build_call get_knight_y_pos_func [| (expr builder e)|] 
         "get_knight_y_pos" builder
+      | SCall ("knight_die", [e]) ->
+        L.build_call knight_die_func [| (expr builder e) |]
+        "" builder
 
 
       | SCall ("new_knave", [e1; e2]) -> 
@@ -340,11 +378,10 @@ in
       | SCall ("attack_knight", [e1;e2]) ->
         L.build_call attack_knight_func [| (expr builder e1); (expr builder e2) |]
         "attack_knight" builder
-      | SCall ("knight_die", [e]) ->
-        L.build_call knight_die_func [| (expr builder e) |]
-        "" builder
       | SCall ("knave_die", [e]) ->
         L.build_free (expr builder e) builder 
+
+
       | SCall (f, args) ->
          let (fdef, fdecl) = StringMap.find f function_decls in
 	 let llargs = List.rev (List.map (expr builder) (List.rev args)) in

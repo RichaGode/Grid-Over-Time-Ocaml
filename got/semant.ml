@@ -67,7 +67,9 @@ let check (globals, functions) =
                                                        ("grid_init", Grid, Int, Int);
                                                        ("new_knight", Knight, Int, Int); 
                                                        ("new_knave", Knave, Int, Int);
-                                                       ("attack_knight", Knight, Knave, Knight);]
+                                                       ("attack_knight", Knight, Knave, Knight);
+                                                       ("set_max_time", Grid, Grid, Int);
+                                                       ("set_current_time", Grid, Grid, Int);]
   in
   let int_decls = 
     let func map (name, ret_type, ty1) = StringMap.add name {
@@ -87,7 +89,9 @@ let check (globals, functions) =
                                            ("get_knight_x_pos", Int, Knight);
                                            ("get_knight_y_pos", Int, Knight);
                                            ("knave_die", Void, Knave);
-                                           ("grid_end", Void, Grid);]
+                                           ("grid_end", Void, Grid);
+                                           ("get_max_time", Int, Grid);
+                                           ("get_current_time", Int, Grid);]
   in 
   let add_func map fd = 
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"
@@ -201,6 +205,8 @@ let check (globals, functions) =
             | "x" -> "get_" ^ ty1 ^ "_x_pos"
             | "y" -> "get_" ^ ty1 ^ "_y_pos"
             | "stealth" -> "get_stealth"
+            | "current_time" -> "get_current_time"
+            | "max_time" -> "get_max_time"
             | _ -> raise ( Failure ("the following variable: " ^ e2' ^ ", does not exist for this class"))
         in
         let fd = find_func function_name in

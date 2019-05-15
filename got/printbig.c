@@ -75,14 +75,18 @@ double pow_func(double a, double b)
 
 typedef struct Grid {
    int x;
-   int y; 
+   int y;
+   int max_time; 
+   int current_time;
 } grid; 
 
 void *grid_init(int x, int y){
   struct Grid *g = NULL;
   g = malloc(sizeof(struct Grid));
   g->x = x;
-  g->y = y; 
+  g->y = y;
+  g->max_time = 50;
+  g->current_time = 0; 
   return g;
 };
 
@@ -97,6 +101,26 @@ int get_grid_x(grid *g){
 int get_grid_y(grid *g){
   return g->y; 
 };
+
+void *set_max_time(grid *g, int x){
+  g->max_time = x;
+  return g;
+}
+
+int get_max_time(grid *g){
+  return g->max_time;
+}
+
+void *set_current_time(grid *g, int x){
+  g->current_time = x;
+  return g;
+}
+
+int get_current_time(grid *g){
+  return g->current_time;
+}
+
+
 
 /* knight functions */ 
 
