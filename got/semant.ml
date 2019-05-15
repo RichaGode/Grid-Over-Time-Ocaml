@@ -51,7 +51,8 @@ let check (globals, functions) =
         locals = []; body = [] } map
       in List.fold_left add_bind_nv StringMap.empty [ 
                                                       ("move_knave", Knave, Knave, Int, Int); 
-                                                      ("move_knight", Knight, Knight, Int, Int)
+                                                      ("move_knight", Knight, Knight, Int, Int);
+                                                      ("near", Int, Knight, Knave, Int);
                                                     ]
   (* Add function name to symbol table *)
   in 
