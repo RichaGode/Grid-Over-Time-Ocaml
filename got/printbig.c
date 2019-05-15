@@ -93,6 +93,10 @@ int get_grid_x(grid *g){
   return g->x; 
 }; 
 
+int get_grid_y(grid *g){
+  return g->y; 
+};
+
 /* knight functions */ 
 
 typedef struct Knight {

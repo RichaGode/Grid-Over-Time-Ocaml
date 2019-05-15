@@ -77,6 +77,7 @@ let check (globals, functions) =
       locals = []; 
       body = [] } map
     in List.fold_left func StringMap.empty [("get_grid_x", Int, Grid);
+                                            ("get_grid_y", Int, Grid);
                                            ("get_stealth", Int, Knave);
                                            ("get_knave_health", Int, Knave); 
                                            ("get_knave_x_pos", Int, Knave);

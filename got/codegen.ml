@@ -92,6 +92,11 @@ in
   let get_grid_x_func : L.llvalue = 
       L.declare_function "get_grid_x" get_grid_x_t the_module in
 
+  let get_grid_y_t : L.lltype = 
+      L.function_type i32_t [| grid_ptr_t |] in
+  let get_grid_y_func : L.llvalue = 
+      L.declare_function "get_grid_y" get_grid_y_t the_module in
+
 
 (*KNIGHT FUNCTIONS *)
   let new_knight_t : L.lltype =
@@ -286,6 +291,9 @@ in
       | SCall ("get_grid_x", [e]) -> 
         L.build_call get_grid_x_func [| (expr builder e) |]
         "get_grid_x" builder
+      | SCall ("get_grid_y", [e]) -> 
+        L.build_call get_grid_y_func [| (expr builder e) |]
+        "get_grid_y" builder
       | SCall ("print_str", [e]) ->
         L.build_call printf_func [| string_format_str ; (expr builder e) |]
         "printf" builder
@@ -307,7 +315,6 @@ in
       | SCall ("get_knight_y_pos", [e]) ->
         L.build_call get_knight_y_pos_func [| (expr builder e)|] 
         "get_knight_y_pos" builder
-
 
 
       | SCall ("new_knave", [e1; e2]) -> 
