@@ -247,14 +247,25 @@ void *set_knave_attack(knave *k, int x) {
 
 /** interactors for knave **/
 knight *attack_knight(knave *k, knight *a){
-  a->health = a->health - k->attack_strength;
-  return a;
+  if (k-> stealth == 1) {
+    a->health = a->health - (k->attack_strength + 10);
+    return a; 
+  }
+  else {
+    a->health = a->health - k->attack_strength;
+    return a;
+  }
 }
 
 /** interactors for knave **/
 knave *attack_knave(knight *k, knave *a){
-  a->health = a->health - k->attack_strength;
-  return a;
+    if (a->stealth == 1) {
+      return a; 
+    }
+    else {
+      a->health = a->health - k->attack_strength;
+      return a; 
+    }
 }
 
 
