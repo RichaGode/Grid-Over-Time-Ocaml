@@ -92,15 +92,15 @@ in
   let grid_end_func : L.llvalue = 
     L.declare_function "grid_end" grid_end_t the_module in
 
-  let get_grid_x_t : L.lltype = 
+  let get_grid_x_pos_t : L.lltype = 
       L.function_type i32_t [| grid_ptr_t |] in
-  let get_grid_x_func : L.llvalue = 
-      L.declare_function "get_grid_x_pos" get_grid_x_t the_module in
+  let get_grid_x_pos_func : L.llvalue = 
+      L.declare_function "get_grid_x_pos" get_grid_x_pos_t the_module in
 
-  let get_grid_y_t : L.lltype = 
+  let get_grid_y_pos_t : L.lltype = 
       L.function_type i32_t [| grid_ptr_t |] in
-  let get_grid_y_func : L.llvalue = 
-      L.declare_function "get_grid_y_pos" get_grid_y_t the_module in
+  let get_grid_y_pos_func : L.llvalue = 
+      L.declare_function "get_grid_y_pos" get_grid_y_pos_t the_module in
 
   let get_max_time_t : L.lltype = 
       L.function_type i32_t [| grid_ptr_t |] in
@@ -145,7 +145,7 @@ in
     L.declare_function "get_knight_y_pos" get_knight_y_pos_t the_module in
 
   let move_knight_t : L.lltype = 
-      L.function_type knight_ptr_t [| knight_ptr_t; i32_t; i32_t |] in
+      L.function_type knight_ptr_t [| knight_ptr_t; grid_ptr_t; i32_t; i32_t |] in
   let move_knight_func : L.llvalue = 
       L.declare_function "move_knight" move_knight_t the_module in
 
@@ -202,7 +202,7 @@ in
     L.declare_function "get_knave_y_pos" get_knave_y_pos_t the_module in
 
   let move_knave_t : L.lltype = 
-      L.function_type knave_ptr_t [| knave_ptr_t; i32_t; i32_t |] in
+      L.function_type knave_ptr_t [| knave_ptr_t; grid_ptr_t; i32_t; i32_t |] in
   let move_knave_func : L.llvalue = 
       L.declare_function "move_knave" move_knave_t the_module in
 
@@ -357,11 +357,11 @@ in
       | SCall ("grid_init", [e1; e2]) -> 
         L.build_call grid_init_func [| (expr builder e1); (expr builder e2) |] 
         "grid_init" builder
-      | SCall ("get_grid_x", [e]) -> 
-        L.build_call get_grid_x_func [| (expr builder e) |]
+      | SCall ("get_grid_x_pos", [e]) -> 
+        L.build_call get_grid_x_pos_func [| (expr builder e) |]
         "get_grid_x_pos" builder
-      | SCall ("get_grid_y", [e]) -> 
-        L.build_call get_grid_y_func [| (expr builder e) |]
+      | SCall ("get_grid_y_pos", [e]) -> 
+        L.build_call get_grid_y_pos_func [| (expr builder e) |]
         "get_grid_y_pos" builder
       | SCall ("get_max_time", [e]) -> 
         L.build_call get_max_time_func [| (expr builder e) |]
@@ -395,8 +395,8 @@ in
       | SCall ("knight_die", [e]) ->
         L.build_call knight_die_func [| (expr builder e) |]
         "" builder
-      | SCall ("move_knight", [e1;e2;e3]) ->
-        L.build_call move_knight_func [| (expr builder e1); (expr builder e2); (expr builder e3) |]
+      | SCall ("move_knight", [e1;e2;e3;e4]) ->
+        L.build_call move_knight_func [| (expr builder e1); (expr builder e2); (expr builder e3); (expr builder e4) |]
         "move_knight" builder
       | SCall ("get_knight_attack", [e]) ->
         L.build_call get_knight_attack_func [| (expr builder e)|] 
@@ -427,8 +427,8 @@ in
       | SCall ("get_knave_y_pos", [e]) ->
         L.build_call get_knave_y_pos_func [| (expr builder e)|] 
         "get_knave_y_pos" builder
-      | SCall ("move_knave", [e1;e2;e3]) ->
-        L.build_call move_knave_func [| (expr builder e1); (expr builder e2); (expr builder e3) |]
+      | SCall ("move_knave", [e1;e2;e3;e4]) ->
+        L.build_call move_knave_func [| (expr builder e1); (expr builder e2); (expr builder e3); (expr builder e4) |]
         "move_knave" builder
       | SCall ("get_knave_attack", [e]) ->
         L.build_call get_knave_attack_func [| (expr builder e)|] 

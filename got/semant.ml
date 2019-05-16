@@ -50,9 +50,19 @@ let check (globals, functions) =
         formals = [(ty1, "x"); (ty2, "y"); (ty3, "z")];
         locals = []; body = [] } map
       in List.fold_left add_bind_nv StringMap.empty [ 
-                                                      ("move_knave", Knave, Knave, Int, Int); 
-                                                      ("move_knight", Knight, Knight, Int, Int);
                                                       ("near", Int, Knight, Knave, Int);
+                                                    ]
+  (* Add function name to symbol table *)
+  in 
+  let four_input_decls = 
+    let add_bind_nv map (name, ret_type, ty1, ty2, ty3, ty4) = StringMap.add name {
+        typ = ret_type;
+        fname = name; 
+        formals = [(ty1, "x"); (ty2, "y"); (ty3, "z"); (ty4, "a")];
+        locals = []; body = [] } map
+      in List.fold_left add_bind_nv StringMap.empty [ 
+                                                      ("move_knave", Knave, Knave, Grid, Int, Int); 
+                                                      ("move_knight", Knight, Knight, Grid, Int, Int);
                                                     ]
   (* Add function name to symbol table *)
   in 
@@ -85,8 +95,8 @@ let check (globals, functions) =
       locals = []; 
       body = [] } map
     in List.fold_left func StringMap.empty [
-                                            ("get_grid_x", Int, Grid);
-                                            ("get_grid_y", Int, Grid);
+                                            ("get_grid_x_pos", Int, Grid);
+                                            ("get_grid_y_pos", Int, Grid);
                                             ("grid_end", Void, Grid);
                                             ("get_max_time", Int, Grid);
                                             ("get_current_time", Int, Grid);
@@ -125,11 +135,16 @@ let check (globals, functions) =
     | None, Some yo -> Some yo
     | Some xo, None -> Some xo
   ) var_arg_function_decls no_arg_decls in
+  let temp2 = StringMap.merge (fun k xo yo -> match xo,yo with
+    | Some xo, Some yo -> Some xo 
+    | None, Some yo -> Some yo
+    | Some xo, None -> Some xo
+  ) temp four_input_decls in
   let master_function_decls = StringMap.merge (fun k xo yo -> match xo,yo with
     | Some xo, Some yo -> Some xo 
     | None, Some yo -> Some yo
     | Some xo, None -> Some xo
-  ) temp int_decls in 
+  ) temp2 int_decls in 
   let function_decls = List.fold_left add_func master_function_decls functions
   in 
   (* Return a function from our symbol table *)

@@ -1,13 +1,13 @@
 int main()
 {
   Grid g;
-  Knave k;
+  Knight k;
   int x;
   int y; 
   int a;
   
 
-  k = new_knave(30,20);
+  k = new_knight(30,20);
   g = grid_init(100,100);
   print(k.x);
   
@@ -18,7 +18,7 @@ int main()
 
     a = g.x - k.x;
     print(a);
-    k = move_knave(k, g, 200, -10);
+    k = move_knight(k, g, 200, -10);
   }
   
   x = k.x;

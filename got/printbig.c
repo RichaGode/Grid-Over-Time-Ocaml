@@ -159,20 +159,52 @@ int get_knight_y_pos(knight *k) {
   return k->y; 
 };
 
-void *move_knight(knight *k, int x, int y){
-  k->x = k->x+x;
-  k->y = k->y+y;
+void *move_knight(knight*k, grid *g, int x, int y){
+  if ((k->x)+x < 0 && (k->y)+y < 0) {
+    return k; 
+  }
+  else if ((k->x)+x < 0 && (k->y)+y >= 0) {
+    k->y = k->y+y;
+    return k; 
+  }
+  else if ((k->x)+x >= 0 && (k->y)+y < 0) {
+    k->x = k->x+x;
+    return k; 
+  }
+  else if ((k->x)+x >= 0 && (k->y)+y >= 0) {
+    if ((k->x)+x > g->x && (k->y)+y <= g->y) {
+      k->x = g->x; 
+      k->y = k->y + y; 
+      return k; 
+    }
+    else if ((k->x)+x <= g->x && (k->y)+y > g->y) {
+      k->x = k->x + x; 
+      k->y = g->y; 
+      return k; 
+    }
+    else if ((k->x)+x > g->x && (k->y)+y > g->y) {
+      k->x = g->x; 
+      k->y = g->y; 
+      return k; 
+    }
+    else {
+      k->x = k->x+x;
+      k->y = k->y+y;
+      return k;
+    }
+
+  }
   return k;
-}
+}; 
 
 int get_knight_attack(knight *k) {
   return k->attack_strength;
-}
+}; 
 
 void *set_knight_attack(knight *k, int x) {
   k->attack_strength = x;
   return k;
-}
+}; 
 
 void knight_die(knight *k) {
   free(k);
@@ -197,7 +229,7 @@ void *new_knave(int x, int y){
   k->health = 100;
   k->x = x;
   k->y = y;
-  k-> stealth = 1; 
+  k-> stealth = 0; 
   k-> attack_strength = 25;
   return k;
 };
@@ -230,11 +262,43 @@ void *set_stealth(knave *k, int val) {
   return k; 
 }; 
 
-void *move_knave(knave *k, int x, int y){
-  k->x = k->x+x;
-  k->y = k->y+y;
+void *move_knave(knave*k, grid *g, int x, int y){
+  if ((k->x)+x < 0 && (k->y)+y < 0) {
+    return k; 
+  }
+  else if ((k->x)+x < 0 && (k->y)+y >= 0) {
+    k->y = k->y+y;
+    return k; 
+  }
+  else if ((k->x)+x >= 0 && (k->y)+y < 0) {
+    k->x = k->x+x;
+    return k; 
+  }
+  else if ((k->x)+x >= 0 && (k->y)+y >= 0) {
+    if ((k->x)+x > g->x && (k->y)+y <= g->y) {
+      k->x = g->x; 
+      k->y = k->y + y; 
+      return k; 
+    }
+    else if ((k->x)+x <= g->x && (k->y)+y > g->y) {
+      k->x = k->x + x; 
+      k->y = g->y; 
+      return k; 
+    }
+    else if ((k->x)+x > g->x && (k->y)+y > g->y) {
+      k->x = g->x; 
+      k->y = g->y; 
+      return k; 
+    }
+    else {
+      k->x = k->x+x;
+      k->y = k->y+y;
+      return k;
+    }
+
+  }
   return k;
-}
+};
 
 int get_knave_attack(knave *k) {
   return k->attack_strength;
