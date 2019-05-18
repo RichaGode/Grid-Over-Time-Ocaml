@@ -1,4 +1,4 @@
-/* Ocamlyacc parser for MicroC */
+(* Authors: Richa Gode (rg3006) and Sagar Lal (sl3946) *)
 
 %{
 open Ast

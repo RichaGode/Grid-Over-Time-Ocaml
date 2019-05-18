@@ -1,0 +1,470 @@
+commit 5577a00a6c5ea2c3df9e5a9a2c355208ebe6b372
+Author: richagode <richa.gode@gmail.com>
+Date:   Sat May 18 14:09:15 2019 -0400
+
+    added authorship
+
+commit 5a2e4c86304c87932c077bdc725073f7f04cfc20
+Author: richagode <richa.gode@gmail.com>
+Date:   Wed May 15 20:46:07 2019 -0400
+
+    near, move, and sample function work.
+
+commit 16fde5f226cc3ea8967fa1d1b4fa239ddac42b99
+Merge: 0a9158e bfebf0a
+Author: richagode <richa.gode@gmail.com>
+Date:   Wed May 15 19:28:20 2019 -0400
+
+    Merge branch 'master' of https://github.com/RichaGode/cs4115-project
+
+commit 0a9158e3ded7ea4245d39789fc7d3e135cec0f7c
+Author: richagode <richa.gode@gmail.com>
+Date:   Wed May 15 19:28:18 2019 -0400
+
+    continuing to write sample program + changed attack
+
+commit bfebf0aea3579a6996fac602776ac7775be33055
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Wed May 15 19:24:27 2019 -0400
+
+    Added near check
+
+commit 61036cccd58edd49c9ab0e72c10f7be2b8396ca6
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Wed May 15 18:54:23 2019 -0400
+
+    Syntax change for grid positions
+
+commit 0c08cea7804b7ecaa2fe5d4624271993b4b57691
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Wed May 15 18:48:19 2019 -0400
+
+    Created test for random that passes
+
+commit 898bfda2991d8a1982998e9898ca14a7e73d0c66
+Author: richagode <richa.gode@gmail.com>
+Date:   Wed May 15 18:38:31 2019 -0400
+
+    adding rand function for grid dimension generator
+
+commit 9e723074c68a5fcfa021599b2752c80817c5fc91
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Wed May 15 18:26:03 2019 -0400
+
+    Added getters and setters for attack and added knight ability to attack. Tests are complete and successful
+
+commit dbe5a08fd4d1fcd2beadb4bbf57cf457e0e74240
+Merge: 07cb6dd 83355f4
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Wed May 15 16:54:24 2019 -0400
+
+    Merging
+
+commit 07cb6dd9a9831f252d4dc98c577a985a85c63155
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Wed May 15 16:52:44 2019 -0400
+
+    Grid time stuff
+
+commit 83355f432e3cc4a1541e9f534e3a113d42991f9c
+Author: richagode <richa.gode@gmail.com>
+Date:   Wed May 15 16:51:24 2019 -0400
+
+    tried to remove freed variable from symbol table
+
+commit 211800a954e795dea720cfb681c63dddddbf1723
+Author: richagode <richa.gode@gmail.com>
+Date:   Wed May 15 15:29:13 2019 -0400
+
+    working on free function
+
+commit d9ea3d21a69573b6858c407c66f633d814bcf99a
+Author: richagode <richa.gode@gmail.com>
+Date:   Wed May 15 13:14:05 2019 -0400
+
+    testing get_grid_y()
+
+commit 6023791da07f824d309fe8c3b17c2af3e531dd2c
+Author: richagode <richa.gode@gmail.com>
+Date:   Tue May 14 15:51:46 2019 -0400
+
+    wrote test for x access for knight, it passes
+
+commit 77a7d8d7c58846556b74905e3adda34c4016a547
+Merge: ef6eda9 6f89be7
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue May 14 15:50:10 2019 -0400
+
+    Merge branch 'master' of https://github.com/RichaGode/cs4115-project
+
+commit ef6eda9689efb4638975cc741475edba3a4a29a1
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue May 14 15:50:06 2019 -0400
+
+    check test knave die
+
+commit 6f89be7577302502f336a07ab25c96dbc466ea4f
+Author: richagode <richa.gode@gmail.com>
+Date:   Tue May 14 15:48:52 2019 -0400
+
+    fixed access for knight and knave using patternmatching
+
+commit 0c66f7aaaec6fe57569a1f42af1726bda4585fd4
+Merge: a7a4808 0700e09
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue May 14 14:35:52 2019 -0400
+
+    Merge branch 'master' of https://github.com/RichaGode/cs4115-project
+
+commit 0700e0936ad17bcc7c8638c048189cb4afc230ef
+Author: richagode <richa.gode@gmail.com>
+Date:   Tue May 14 14:35:35 2019 -0400
+
+    trying to separate knight vs. knave functions in semant
+
+commit a7a4808e69bc1a70902dd4a0c887b6eebec56073
+Merge: 3de1c75 22a9942
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue May 14 14:34:44 2019 -0400
+
+    Merge branch 'master' of https://github.com/RichaGode/cs4113-project
+
+commit 3de1c750ad4a16068c48b02071de4e46886b44c9
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue May 14 14:34:38 2019 -0400
+
+    Fixed move function for knave and tests now pass
+
+commit 22a994256b109c98342b787bfb36a74186e8241d
+Author: richagode <richa.gode@gmail.com>
+Date:   Tue May 14 13:54:56 2019 -0400
+
+    knight access functions work
+
+commit fd14bec009a908ba3a210fd3b962b44169a10170
+Author: richagode <richa.gode@gmail.com>
+Date:   Tue May 14 13:21:16 2019 -0400
+
+    adding test for .x access
+
+commit e1445a388674bffcc00da7f3898fff783bb7843d
+Author: richagode <richa.gode@gmail.com>
+Date:   Tue May 14 13:11:54 2019 -0400
+
+    access now works for knight.health
+
+commit 1d025515d7b5024bf85490e0bd890a6f2bd42b91
+Author: richagode <richa.gode@gmail.com>
+Date:   Mon May 13 20:20:53 2019 -0400
+
+    added grid free function. (grid_end(Grid object)). works.
+
+commit 38356b2268918fc4d89b504f42f116d6a1464d53
+Author: richagode <richa.gode@gmail.com>
+Date:   Mon May 13 20:14:21 2019 -0400
+
+    added knave test. it works
+
+commit 2b9fa51c34f076b53f49f78c4585ad102854cfda
+Author: richagode <richa.gode@gmail.com>
+Date:   Mon May 13 19:51:28 2019 -0400
+
+    added knave die function
+
+commit 8848005edbf886b241d31cbab88a8be5c550439f
+Author: richagode <richa.gode@gmail.com>
+Date:   Mon May 13 19:44:07 2019 -0400
+
+    fixed interact tests. die function for knight as well as attack now work.
+
+commit b98038f76299da102677262f4a1690e43bcd8e86
+Author: richagode <richa.gode@gmail.com>
+Date:   Mon May 13 19:20:53 2019 -0400
+
+     access operator works if you don't assign it to a type, and just print it. need to fix more but it compiles for now
+
+commit ff97795d9d1adbe3fa3e281e3c8461db795fdeb2
+Merge: b4590f1 96dc23b
+Author: richagode <richa.gode@gmail.com>
+Date:   Mon May 13 19:05:28 2019 -0400
+
+    Merge branch 'master' of https://github.com/RichaGode/cs4115-project
+
+commit b4590f1c3e9cbadf7164cc01408a82df70812ef4
+Author: richagode <richa.gode@gmail.com>
+Date:   Mon May 13 19:05:22 2019 -0400
+
+    debugging access feature. type error as of now
+
+commit 96dc23b028554b623216a6867918eb803fbbc02a
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Mon May 13 16:32:50 2019 -0400
+
+    Added attacking and die function, but die doesn't actually work in knight interact test
+
+commit acc32f95083265e86d9570661e871937754ba24a
+Merge: e5abd46 c9b2912
+Author: richagode <richa.gode@gmail.com>
+Date:   Mon May 13 15:09:40 2019 -0400
+
+    added individual accessor functions for knave, trying to pattern match for access now
+
+commit e5abd46e3a22bf2ab97b107a7ed6d738e4ce0969
+Author: richagode <richa.gode@gmail.com>
+Date:   Mon May 13 14:38:13 2019 -0400
+
+    added knave accessor functions to semant with pattern matching for access
+
+commit c9b29125ba07a0a6582293aefff9dd8f7038866f
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Mon May 13 14:37:35 2019 -0400
+
+    Added get health for knight and move function for knave, though latter is untested
+
+commit 7f5e1a9d730db8ed797fe1c83952a3a4add36e64
+Author: richagode <richa.gode@gmail.com>
+Date:   Mon May 13 13:39:50 2019 -0400
+
+    added knight + knave types, structs, and a getter/setter for stealth for knave.
+
+commit f14c7a212a82a30cb15cddc6226f2535532c3aa7
+Author: richagode <richa.gode@gmail.com>
+Date:   Mon May 13 12:27:39 2019 -0400
+
+    added grid functionality, working on knight + knave
+
+commit 8e6a8a47c06653fbb18cacad4ed17b1ea5e47b03
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Sun May 12 16:58:36 2019 -0400
+
+    Fixed failing outputs
+
+commit d07455a0b93e2b858c5b8403871b64a25410ee1d
+Author: richagode <richa.gode@gmail.com>
+Date:   Sun May 12 16:46:49 2019 -0400
+
+    Trying to do the get grid x thing
+
+commit 70c490d3bf53389a765f69fbd72cf4b669b5981d
+Author: richagode <richa.gode@gmail.com>
+Date:   Sat May 11 16:18:11 2019 -0400
+
+    added grid init function to printbig + grid type
+
+commit f7eba2dde55efd485aff639f3f36a82cab86575a
+Author: richagode <richa.gode@gmail.com>
+Date:   Sat May 11 15:13:17 2019 -0400
+
+    adding structs: round 1
+
+commit c0dd66a74c15609a7d900cfd0ec80aa713cc4f4d
+Author: richagode <richa.gode@gmail.com>
+Date:   Tue Apr 30 16:07:18 2019 -0400
+
+    fixed pow functionality, looking at adding grid struct now
+
+commit 1cf7ccd98d4c0a67897d6ff6e9df4f25f79724f3
+Author: richagode <richa.gode@gmail.com>
+Date:   Tue Apr 30 14:13:46 2019 -0400
+
+    testing functionality of extern pow
+
+commit 65464c36dedaa31a0cd185b7dca166028afd66cd
+Merge: 9ad823c 0e67be6
+Author: richagode <richa.gode@gmail.com>
+Date:   Sun Apr 28 19:20:07 2019 -0400
+
+    testing exp -> pow functionality
+
+commit 9ad823c5766e51766496079e185cca10dc32a57c
+Author: richagode <richa.gode@gmail.com>
+Date:   Sun Apr 28 19:17:17 2019 -0400
+
+    testing exp -> pow functionality
+
+commit 0e67be6f8ae18af853666978b9974ea36b9bd6ae
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Sun Apr 28 19:15:53 2019 -0400
+
+    Exponent test case
+
+commit cc9e9335f2ee032c844abdb8df2ea82f692a3b00
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Mon Apr 22 17:36:43 2019 -0400
+
+    Fixed scanner to only print out strings not strings with quotes
+
+commit a9573f2c9312e0210913437d7224396c8f880bc4
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue Apr 16 22:17:18 2019 -0400
+
+    Added mod functionality fully, added some of the exponent functionality (still doesn't pass tests)
+
+commit 29112bb2cf628844e4d1b8765c01a0fe2290066c
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Mon Apr 15 21:39:49 2019 -0400
+
+    Fixed HELLO WORLD test so that it works
+
+commit 8075eb74a6f3e864bbde3c31dfa14af1aaa64818
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue Apr 2 14:01:13 2019 -0400
+
+    GOT HELLO WORLDgit add --all
+
+commit efa2e6337c8eda757bc17caae1b8da01d36bc7ce
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue Apr 2 10:23:27 2019 -0400
+
+    Attempted to add the print and string buffer to all files. Hello World still doesn't pass, but none of the other tests fail, progress
+
+commit a593abf4654d6e1eb1a548a08ec45d4c91ac1b7b
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue Apr 2 01:08:03 2019 -0400
+
+    Modified hello world test to have print_str instead of print to make sure we can isolate it
+
+commit 23d8abae918e9df2cac8d3efde76e4bfe2b5622d
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue Apr 2 00:35:24 2019 -0400
+
+    Created hello world tests in the tests folder and they currently fail
+
+commit 1007ddbba63621cda5cbafcabec9ae0be35ec9b3
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue Apr 2 00:27:57 2019 -0400
+
+    Removing _build files and got native from git
+
+commit 9af350cb1423db153577802b10ef4fbef54dad9e
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue Apr 2 00:27:23 2019 -0400
+
+    Added comments to scanner and modified tests such that comments are written with /# and #/
+
+commit 1620843dcb9edfd9ee2f08ca74d3d52eacb09f7f
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue Apr 2 00:06:45 2019 -0400
+
+    Added all symbols to scanner/parser/ast except for changing comments and strings/printing strings. This still passes all tests
+
+commit ac04c4d692cf4b4dd0546cf1925c60d6b3eb5865
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Mon Apr 1 23:56:48 2019 -0400
+
+    Modified names of files and paths so can still compile and pass all steps, note command for create printbig is make printbig.o
+
+commit f45b0fdd12108f2cc73befca04afcc80e3df7606
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Mon Apr 1 23:38:39 2019 -0400
+
+    Forgot to move some files, so now proper organization
+
+commit f402975491ea0e48480c42754f96b67b42033f33
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Mon Apr 1 23:37:45 2019 -0400
+
+    Reorganizing files and restarting working on got, currently successfully tests
+
+commit 5811ae14c77da805ed44b33e6d33e03e20f3cf15
+Author: richagode <richa.gode@gmail.com>
+Date:   Mon Apr 1 17:41:03 2019 -0400
+
+    e2e testing
+
+commit 786a37d3384845336178fc4964ba035b4136e876
+Author: richagode <richa.gode@gmail.com>
+Date:   Sun Mar 31 16:06:12 2019 -0400
+
+    microc compiles, working on getting got to compile
+
+commit a2956085e0be14a041138bb2e34f8ad7a62bb188
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Sun Mar 31 14:28:02 2019 -0400
+
+    Modified codegen to account for strings and printing of strings
+
+commit b86862ee01887cf6ca41ed114d62b1dded6c4cda
+Author: richagode <richa.gode@gmail.com>
+Date:   Sat Mar 30 17:49:20 2019 -0400
+
+    testing menhir acceptance on string literal
+
+commit 4fa1e60032854a1e1c2d39814f73a5766128196c
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Sat Mar 30 15:07:09 2019 -0400
+
+    Fixing our git for microc
+
+commit 2b1d59526e40d3dd87ccebbfe21bc7016cff2e09
+Merge: bc48b70 8b8e10a
+Author: richagode <richa.gode@gmail.com>
+Date:   Sat Mar 30 15:04:13 2019 -0400
+
+    Merging
+
+commit bc48b704aed4e813f11a5c4d5cf758f1803d5f3a
+Author: richagode <richa.gode@gmail.com>
+Date:   Sat Mar 30 15:01:09 2019 -0400
+
+    added string to semant.ml
+
+commit 8b8e10a42084906496e9d6d31a25c61089842603
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Sat Mar 30 12:48:18 2019 -0400
+
+    Redownloaded micro c
+
+commit e54d8983fec55d69dfcd0e0e60e78a1cfcb4c290
+Author: richagode <richa.gode@gmail.com>
+Date:   Sat Mar 30 12:29:50 2019 -0400
+
+    adding access rule to parser
+
+commit 98ba6d52b0530066790a543ef81d73eec482a207
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Thu Mar 28 13:50:46 2019 -0400
+
+    Modified types in ast and sast and changed formatting
+
+commit 241844390d62936a8d883d5d2dd7450581839859
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Thu Mar 28 13:06:01 2019 -0400
+
+    Copying over AST
+
+commit 65c33be2ffc7d2729621056387a47df50da70de3
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Wed Mar 27 14:13:00 2019 -0400
+
+    Changes to parser and scanner, also changed microc's ast to match what we want so be aware that no longer perfect
+
+commit 1261d683f1e0e73f651c4c47fdb769ab97d7065a
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue Mar 26 22:53:12 2019 -0400
+
+    Modified scanner, created parser where we modified tokens as well as the left/right associativity
+
+commit ee3019ed253a980abf670085cd7f8b11b58f50ad
+Author: richagode <richa.gode@gmail.com>
+Date:   Tue Mar 26 21:50:31 2019 -0400
+
+    adding reference manual to file
+
+commit 1dca684a99cb0cba3a053cf50162a37a721dbd17
+Author: richagode <richa.gode@gmail.com>
+Date:   Tue Mar 26 21:44:30 2019 -0400
+
+    preliminary changes to scanner.mll
+
+commit d7ce7a943492c67f4b185fafffc7febb4850d3b8
+Author: Sagar Lal <sagar.lal@columbia.edu>
+Date:   Tue Mar 26 18:52:18 2019 -0400
+
+    Adding micro-c
+
+commit 588c5f12091b7178133567a2cdf551e67945e084
+Author: Richa Gode <richa.gode@gmail.com>
+Date:   Tue Mar 26 18:46:54 2019 -0400
+
+    Initial commit
