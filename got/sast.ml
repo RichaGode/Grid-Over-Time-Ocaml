@@ -1,5 +1,8 @@
 (* Semantically-checked Abstract Syntax Tree and functions for printing it *)
 
+
+(* Authors: Richa Gode (rg3006) and Sagar Lal (sl3946) *)
+
 open Ast
 
 type sexpr = typ * sx

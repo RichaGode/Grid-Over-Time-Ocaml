@@ -2,6 +2,9 @@
    check the resulting AST and generate an SAST from it, generate LLVM IR,
    and dump the module *)
 
+
+(* Authors: Richa Gode (rg3006) and Sagar Lal (sl3946) *)
+
 type action = Ast | Sast | LLVM_IR | Compile
 
 let () =

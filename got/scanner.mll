@@ -1,5 +1,9 @@
 (* Ocamllex scanner for MicroC *)
 
+
+(* Authors: Richa Gode (rg3006) and Sagar Lal (sl3946) *)
+
+
 { open Gotparser }
 
 let digit = ['0' - '9']

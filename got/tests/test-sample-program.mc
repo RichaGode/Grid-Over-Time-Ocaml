@@ -15,10 +15,7 @@ int main () {
   while (g.current_time < g.max_time) {
     if (near(k,j,3) == 1) {
 
-      /# if the stealth of the knave is 1, do nothing. #/
-
       if (j.stealth == 0) {
-      /# set the stealth of the knave to be 1 #/
         print(j.health);  
         j = set_stealth(j, 1); 
         j = attack_knave(k,j);
@@ -29,7 +26,6 @@ int main () {
       }
     }
     else {
-      /# now move them closer #/
       k = move_knight(k,g,10,4); 
       print(k.x);
       print(k.y); 
@@ -42,8 +38,7 @@ int main () {
   knave_die(j); 
 
   return 0; 
-
 }
-
+                                                                   
 
 
